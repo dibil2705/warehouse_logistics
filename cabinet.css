@@ -1,0 +1,21 @@
+/* The marketing preview and the future LOTIS cabinet share these visual tokens. */
+:root{--cabinet-primary:var(--purple);--cabinet-surface:var(--white);--cabinet-border:var(--line);--cabinet-radius:8px}
+.cabinet-features{list-style:none;margin:29px 0 30px;padding:0;display:grid;gap:20px}
+.cabinet-features>li{display:flex;gap:17px;align-items:flex-start}
+.cabinet-features>li>span{font-size:10px;font-weight:700;color:var(--purple);line-height:1.8;padding-top:2px}
+.cabinet-features strong{font-size:14px;font-weight:650}
+.cabinet-features p{font-size:12px;line-height:1.7;color:#72756c;margin:5px 0 0;max-width:350px}
+.cabinet-actions{display:flex;align-items:center;gap:23px;flex-wrap:wrap}
+.platform-copy>.cabinet-caption{font-size:10px;color:#777b70;margin-top:15px;line-height:1.7}
+.cabinet-preview{min-width:0}
+.request-statuses{padding:20px 0 0;margin:0;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);gap:8px;counter-reset:stage}
+.request-statuses li{font-size:9px;line-height:1.5;color:#777b70;counter-increment:stage;position:relative}
+.request-statuses li:before{content:'0' counter(stage);display:block;font-size:10px;color:#a0a496;margin-bottom:7px}
+.request-statuses .current{color:var(--purple);font-weight:700}
+.request-statuses .current:before{color:var(--purple)}
+.preview-note{font-size:9px;line-height:1.7;color:#85877f;margin:18px 0 0;max-width:410px}
+.cabinet-preview .dashboard-scene{margin-bottom:35px}
+.cabinet-preview .interface-caption{white-space:normal;text-align:center;width:100%;bottom:-12px}
+#platform-title:focus{outline:none}
+@media(max-width:1100px){.cabinet-actions{gap:20px}.cabinet-actions>.button{gap:15px;padding-inline:18px}.request-statuses li{font-size:8px}}
+@media(max-width:700px){.cabinet-features{margin-top:24px;gap:18px}.cabinet-features strong{font-size:13px}.cabinet-features p{font-size:11px;max-width:none}.cabinet-actions{gap:22px}.platform-copy>.cabinet-caption{font-size:9px}.cabinet-preview{margin-top:10px}.cabinet-preview .dashboard-scene{margin-bottom:32px}.request-statuses{padding-top:16px;gap:12px}.request-statuses li{font-size:8px}.preview-note{font-size:9px}.cabinet-preview .interface-caption{bottom:-14px;font-size:7px}}

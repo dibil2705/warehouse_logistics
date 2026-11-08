@@ -1,0 +1,30 @@
+# Generated deployment packages and visual QA output
+artifacts/
+materials/
+tmp/
+qa/runtime/
+qa/*.png
+*.tar.gz
+*.zip
+
+# Site deployment checkout and local workflow state
+sites/
+.sites-checkout/
+.site-source-workflow/
+
+# LOTIS upstream documentation and sample applications
+LOTIS/docs/
+LOTIS/examples/
+LOTIS/VIDEO.gif
+LOTIS/LOTIS.jpg
+LOTIS/Examples.md
+LOTIS/Examples.ru.md
+LOTIS/QuickStart.md
+LOTIS/QuickStart.ru.md
+LOTIS/README.md
+LOTIS/README.ru.md
+
+# Tool and editor state
+.agents/
+.codex/
+node_modules/

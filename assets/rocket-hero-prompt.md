@@ -1,0 +1,7 @@
+# Иллюстрация первого экрана второй версии
+
+Файл: `rocket-logistics.png`. Создан встроенным image_gen, прозрачный фон сохранён. Это иллюстрация, а не фотография техники компании.
+
+## Точный запрос
+
+Use case: product-mockup. Asset type: transparent cutout hero illustration for a Russian warehouse logistics landing page, placed on the right half of a light gray website. Primary subject: a compact modern electric warehouse reach stacker / pallet forklift in warm vermilion orange and graphite black, with a low wooden pallet carrying a neat stack of realistic kraft cardboard shipping cartons. No driver and no people. Premium photorealistic industrial product photography with a very slight 3D advertising polish, precise functional geometry and realistic forks supporting the pallet, black wheels, orange body, small details in brushed steel. Composition: three-quarter front view, entire forklift and entire load visible, compact upright group, no cropped wheels or forks, centered within a square canvas with modest breathing space. Forklift behind and to the right of cartons; cartons in front and left. Soft studio illumination from upper left, restrained natural contact shadow under objects. Genuine transparent alpha background, isolated objects only. No warehouse walls, no floor plane, no backdrop, no text, no logos, no watermark, no large graphic letter, no frame. The webpage will supply its own oversized red letter behind this asset.

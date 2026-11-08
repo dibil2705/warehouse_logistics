@@ -1,0 +1,14 @@
+/* Compact frosted navigation; translation never changes document layout. */
+body{--nav-rgb:255,255,255}.palette-mint{--nav-rgb:255,255,255}
+html{scroll-padding-top:80px}
+.header,.hero-at-top .header,.palette-mint .header{background:rgba(var(--nav-rgb),.72);border-bottom:1px solid rgba(120,140,125,.15);backdrop-filter:blur(18px) saturate(145%);-webkit-backdrop-filter:blur(18px) saturate(145%);z-index:40;transform:translate3d(0,0,0);opacity:1;transition:transform .4s cubic-bezier(.22,.61,.36,1),opacity .3s ease,background .25s ease,box-shadow .25s ease;will-change:transform}
+.header .header-inner{height:64px}
+.header a.brand{gap:10px}.header a.brand .brand-symbol{width:38px;height:38px}.header a.brand .brand-name{font-size:22px}.header a.brand .brand-type{gap:4px}.header a.brand .brand-descriptor{font-size:6px}
+.header .account-link{min-height:36px;padding:8px 12px;font-size:11px}.header .button-small{min-height:36px;padding-block:9px}
+.header.is-scrolled{box-shadow:0 5px 24px #28372d08}
+.header.is-hidden{transform:translate3d(0,calc(-100% - 4px),0);opacity:0;pointer-events:none}
+.header .mobile-nav:not([hidden]){background:rgba(var(--nav-rgb),.96)}
+.cinematic-hero{margin-top:-64px}
+@media(max-width:700px){html{scroll-padding-top:74px}.header .header-inner{height:58px}.header a.brand .brand-symbol{width:31px;height:31px}.header a.brand .brand-name{font-size:20px}.header a.brand .brand-descriptor{font-size:5.5px}.header a.brand{gap:8px}.cinematic-hero{margin-top:-58px}}
+@supports not (backdrop-filter:blur(1px)){.header,.hero-at-top .header,.palette-mint .header{background:rgba(var(--nav-rgb),.94)}}
+@media(prefers-reduced-motion:reduce){.header{transition:none;will-change:auto}}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><base href="/"><title>Liquid reveal integration check</title><style>
+body{margin:20px;background:#eee;font:14px Arial}button{padding:12px 18px;margin-bottom:15px;cursor:pointer}#fixtures{display:flex;gap:15px}.fixture{width:500px;flex-shrink:0}.stage{width:500px;height:350px;position:relative;overflow:hidden}.stage>img,.stage>canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 59%;pointer-events:none}output{display:block;white-space:pre-wrap;background:#fff;margin-top:20px;padding:20px}h2{font-size:15px}
+</style><script src="hero-liquid.js" defer></script></head><body><h1>Liquid reveal: browser integration check</h1><button id="run">Run motion / fade checks</button><div id="fixtures"></div><output id="result" role="status">Ready</output><script>
+window.addEventListener('load',()=>{
+ const result=document.getElementById('result');
+ const fixtures=['webgl2','canvas2d'].map(renderer=>{
+  const root=document.createElement('div');root.className='fixture';root.innerHTML=`<h2>${renderer}</h2><div class="stage"><img class="hero-scene-photo" src="assets/warehouse-hero.jpg"><canvas class="hero-liquid"></canvas></div>`;document.getElementById('fixtures').append(root);
+  const stage=root.querySelector('.stage');const reveal=new window.SkladnoLiquidReveal(stage,root,renderer==='canvas2d'?{renderer}:{});
+  return {root,stage,reveal,renderer};
+ });
+ const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+ const event=(fixture,type,x,y)=>{const b=fixture.stage.getBoundingClientRect();fixture.stage.dispatchEvent(new PointerEvent(type,{pointerType:'mouse',clientX:b.left+x,clientY:b.top+y,bubbles:true}));};
+ async function sample(fixture){
+  return new Promise(resolve=>requestAnimationFrame(()=>{
+   const canvas=fixture.root.querySelector('canvas');const count=canvas.width*canvas.height;let pixels;
+   if(fixture.root.dataset.liquidEngine==='webgl2'){pixels=new Uint8Array(count*4);canvas.getContext('webgl2').readPixels(0,0,canvas.width,canvas.height,6408,5121,pixels);}
+   else pixels=canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data;
+   let visible=0;for(let i=3;i<pixels.length;i+=4)if(pixels[i]>127)visible++;
+   resolve(visible/count);
+  }));
+ }
+ document.getElementById('run').addEventListener('click',async()=>{
+  document.getElementById('run').disabled=true;result.textContent='Running…';const reports=[];
+  for(const f of fixtures){
+   await f.reveal.initialize();event(f,'pointerenter',150,175);const deadline=performance.now()+10000;while(f.reveal.progress<.995&&performance.now()<deadline)await wait(50);await wait(300);
+   const stationary=await sample(f);const state={progress:f.reveal.progress,inView:f.reveal.inView,inside:f.reveal.pointer.inside,width:f.reveal.engine?.width,height:f.reveal.engine?.height,maxDensity:f.reveal.engine?.density instanceof Float32Array?Math.max(...f.reveal.engine.density):null};
+   for(let i=0;i<18;i++){event(f,'pointermove',150+i*9,175+Math.sin(i/4)*45);await wait(16);}
+   const moving=await sample(f);
+   event(f,'pointerleave',0,0);await wait(1100);const faded=await sample(f);
+   reports.push({state,requested:f.renderer,actual:f.root.dataset.liquidEngine,stationary:stationary.toFixed(4),moving:moving.toFixed(4),faded:faded.toFixed(4),pass:stationary>.001&&moving>.001&&faded<.001});
+  }
+  result.textContent=JSON.stringify(reports,null,2);document.getElementById('run').disabled=false;
+ });
+});
+</script></body></html>

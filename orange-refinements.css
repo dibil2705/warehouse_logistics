@@ -1,0 +1,73 @@
+/* Changes are deliberately scoped to the orange version. */
+.palette-orange .s-flow{grid-template-columns:minmax(0,1fr) 32px minmax(0,1fr) 32px minmax(0,1fr);gap:15px;align-items:stretch}
+.palette-orange .s-flow article{min-width:0;padding:32px 28px 30px;border:1px solid #e5dbd1;border-radius:18px;background:#fff;box-shadow:0 4px 16px #48301e03}
+.palette-orange .s-flow-icon{box-sizing:content-box;width:32px;height:32px;padding:14px;border-radius:16px;background:#fff0e7;color:#dc4822;stroke-width:1.6}
+.palette-orange .s-flow h3{font-size:24px;line-height:1.25;letter-spacing:-.7px;margin:26px 0 16px;min-height:60px;display:flex;align-items:flex-end}
+.palette-orange .s-flow p{font-size:14px;line-height:1.8;color:#74736e;max-width:280px}
+.palette-orange .s-flow .s-flow-core{background:var(--s-accent);border-color:var(--s-accent);box-shadow:0 12px 28px #ef532b16}
+.palette-orange .s-flow-core .s-flow-icon{background:#ffffff26;color:#fff}
+.palette-orange .s-flow-arrow{display:flex;align-items:center;justify-content:center;color:#b68b70;font-size:0}
+@media(max-width:1000px){.palette-orange .s-flow{gap:10px;grid-template-columns:minmax(0,1fr) 20px minmax(0,1fr) 20px minmax(0,1fr)}.palette-orange .s-flow article{padding:26px 20px}.palette-orange .s-flow h3{font-size:21px;min-height:53px}.palette-orange .s-flow p{font-size:13px}}
+@media(max-width:700px){.palette-orange .s-flow{grid-template-columns:1fr;gap:0}.palette-orange .s-flow article{padding:26px;border-radius:15px;display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:18px;row-gap:14px;align-items:center}.palette-orange .s-flow-icon{width:26px;height:26px;padding:11px;border-radius:13px;grid-row:1}.palette-orange .s-flow h3{font-size:22px;min-height:0;display:block;margin:0;letter-spacing:-.6px}.palette-orange .s-flow p{grid-column:1/-1;font-size:13px;max-width:none}.palette-orange .s-flow-arrow{height:32px}.palette-orange .s-flow-arrow svg{transform:rotate(90deg);width:24px;height:18px}}
+
+/* One rounded closing section, following the user's «мой бизнес» reference. */
+.palette-orange .orange-closing{padding:0;color:#fff;background:#272825;border-radius:30px 30px 0 0;overflow:hidden}
+.orange-closing-main{position:relative;isolation:isolate;min-height:420px;display:grid;place-items:center;padding:74px 24px 70px;text-align:center}
+.orange-closing-main::before,.orange-closing-main::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;filter:blur(15px);opacity:.3;z-index:-1;pointer-events:none}
+.orange-closing-main::before{left:-80px;bottom:-120px;background:#ef532b}.orange-closing-main::after{right:-70px;top:-100px;background:#dca36c}
+.orange-closing-main h2{max-width:800px;margin:0 auto 20px;font-size:clamp(42px,5vw,64px);line-height:1.06;letter-spacing:-2px;font-weight:550;color:#fff}
+.orange-closing-main p{max-width:650px;margin:0 auto 30px;font-size:17px;line-height:1.7;color:#ffffffb8}
+.orange-closing-actions{display:flex;justify-content:center;gap:12px}.orange-closing-actions .button{min-height:50px;gap:24px;padding:15px 23px;font-size:13px;border-radius:9px;border:1px solid transparent}.orange-closing-actions .orange-closing-partner{color:#fff;background:transparent;border-color:#ffffff4d}.orange-closing-actions .orange-closing-partner:hover{background:#ffffff12;border-color:#ffffff80}
+.orange-closing-footer{width:min(1120px,calc(100% - 48px));margin:0 auto;padding:28px 0 25px;color:#fff;border-top:1px solid #ffffff2e;background:transparent}
+.orange-closing-legal{display:grid;grid-template-columns:1.15fr 1fr auto;gap:28px 48px;color:#ffffff99;font-size:13px;line-height:1.75}
+.orange-closing-legal h3{color:#fff;font-size:15px;font-weight:550;line-height:1.5;letter-spacing:-.2px;margin:0 0 10px}.orange-closing-legal>div>span,.orange-closing-legal>div>a{display:block}.orange-closing-legal address{font-style:normal}.orange-closing-legal a{color:#ffffffc2;transition:color .2s}.orange-closing-legal a:hover{color:#fff}.orange-closing-contacts{text-align:right}.orange-closing-contacts .orange-closing-phone{font-size:17px;letter-spacing:-.3px;font-weight:550;margin-bottom:8px;color:#fff}.orange-closing-contacts .orange-closing-documents{font-size:10px;margin-top:12px;max-width:240px;color:#ffffff80}
+.orange-closing-legal details{margin-top:10px}.orange-closing-legal summary{display:inline-flex;align-items:center;gap:15px;cursor:pointer;list-style:none;font-size:11px;color:#ffffffa6}.orange-closing-legal summary::-webkit-details-marker{display:none}.orange-closing-legal summary>span{font-size:18px;line-height:1}.orange-closing-legal details[open] summary>span{transform:rotate(45deg)}.orange-closing-legal details p{font-size:11px;line-height:1.8;margin:10px 0 0;max-width:300px;color:#ffffff99}
+.orange-closing-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:26px;font-size:10px;line-height:1.6;color:#ffffff6e}.orange-closing-bottom a{color:#ffffffa6}.orange-closing-bottom a span{margin-left:8px}.orange-closing a:focus-visible,.orange-closing button:focus-visible,.orange-closing summary:focus-visible{outline:2px solid #ffad8e;outline-offset:5px;border-radius:4px}
+@media(max-width:700px){.palette-orange .orange-closing{border-radius:30px 30px 0 0}.orange-closing-main{min-height:0;padding:62px 20px 52px}.orange-closing-main h2{font-size:41px;line-height:1.1;letter-spacing:-1.5px}.orange-closing-main p{font-size:14px;line-height:1.8;margin-bottom:27px}.orange-closing-actions{flex-direction:column;max-width:310px;margin:0 auto;gap:10px}.orange-closing-actions .button{min-height:48px;justify-content:center}.orange-closing-footer{width:calc(100% - 38px);padding:27px 0 25px}.orange-closing-legal{grid-template-columns:1fr;gap:25px;font-size:12px}.orange-closing-legal h3{font-size:14px;margin-bottom:7px}.orange-closing-contacts{text-align:left}.orange-closing-contacts .orange-closing-phone{font-size:18px}.orange-closing-contacts .orange-closing-documents{max-width:none;font-size:10px}.orange-closing-main::after{right:-130px}.orange-closing-bottom{margin-top:25px}}
+
+/* Interactive growth stages adapted from the Ecwid reference. */
+.palette-orange .s-journey{padding-block:128px;background:#fff8f3}
+.palette-orange .s-journey-heading{max-width:720px;margin:0 0 54px;text-align:left}
+.palette-orange .s-journey-heading h2{margin:0;font-size:clamp(39px,4.25vw,62px);line-height:1.06;letter-spacing:-2px}
+.palette-orange .s-journey-cards{display:flex;gap:20px;align-items:stretch}
+.palette-orange .s-journey-card{position:relative;display:flex;flex:1 1 0;min-width:0;height:590px;overflow:hidden;border-radius:18px;outline:0;cursor:default;isolation:isolate;transition:flex-grow .5s cubic-bezier(.4,0,.2,1)}
+.palette-orange .s-journey-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 38%,#1e1611a3 100%);pointer-events:none;transition:opacity .4s ease;z-index:-1}
+.palette-orange .s-journey-card img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.78) saturate(.76);transform:scale(1.025);transition:filter .48s cubic-bezier(.4,0,.2,1),transform .72s cubic-bezier(.2,.7,.3,1)}
+.palette-orange .s-journey-card-content{position:absolute;inset:auto 0 0;padding:8px;z-index:1}
+.palette-orange .s-journey-card-panel{position:relative;display:grid;grid-template-columns:minmax(128px,1fr) minmax(0,1fr);gap:20px;min-height:176px;padding:18px;background:#fff;border:1px solid #f2e3d8;border-radius:11px;overflow:hidden}
+.palette-orange .s-journey-card-heading{display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-width:0}
+.palette-orange .s-journey-card-heading>span{font-size:11px;font-weight:650;letter-spacing:.09em;color:#b47451}
+.palette-orange .s-journey-card h3{margin:0;color:#2e2824;font-size:23px;line-height:1.12;letter-spacing:-.7px;transition:color .4s ease}
+.palette-orange .s-journey-card-panel>p{align-self:end;margin:0;opacity:0;visibility:hidden;color:#726b65;font-size:12px;line-height:1.65;transform:translateX(18px);transition:opacity .28s ease,transform .45s cubic-bezier(.4,0,.2,1),visibility 0s linear .45s}
+@media(min-width:1101px){
+  .palette-orange .s-journey-cards:hover .s-journey-card{flex-grow:.78}
+  .palette-orange .s-journey-cards:hover .s-journey-card img{filter:brightness(.6) saturate(.55)}
+  .palette-orange .s-journey-cards:hover .s-journey-card h3{color:#77716c}
+  .palette-orange .s-journey-card:hover,.palette-orange .s-journey-card:focus-visible{flex-grow:2.25}
+  .palette-orange .s-journey-card:hover img,.palette-orange .s-journey-card:focus-visible img{filter:brightness(.93) saturate(.92);transform:scale(1.07)}
+  .palette-orange .s-journey-card:hover::after,.palette-orange .s-journey-card:focus-visible::after{opacity:.62}
+  .palette-orange .s-journey-card:hover h3,.palette-orange .s-journey-card:focus-visible h3{color:#2e2824}
+  .palette-orange .s-journey-card:hover .s-journey-card-panel>p,.palette-orange .s-journey-card:focus-visible .s-journey-card-panel>p{opacity:1;visibility:visible;transform:translateX(0);transition-delay:.1s,0s,0s}
+  .palette-orange .s-journey-card:focus-visible{box-shadow:0 0 0 3px #dc4822;outline:4px solid #fff8f3;outline-offset:2px}
+}
+@media(min-width:701px) and (max-width:1100px){
+  .palette-orange .s-journey{padding-block:95px}
+  .palette-orange .s-journey-card{height:500px}
+  .palette-orange .s-journey-card-panel{display:block;min-height:172px}
+  .palette-orange .s-journey-card-panel>p{visibility:visible;opacity:1;transform:none;margin:18px 0 0;font-size:12px;transition:none}
+}
+@media(max-width:700px){
+  .palette-orange .s-journey{padding-block:76px}
+  .palette-orange .s-journey-heading{margin-bottom:32px;text-align:left}
+  .palette-orange .s-journey-heading h2{font-size:39px;letter-spacing:-1.6px}
+  .palette-orange .s-journey-cards{display:grid;gap:14px}
+  .palette-orange .s-journey-card{height:410px;border-radius:15px}
+  .palette-orange .s-journey-card img{filter:brightness(.77) saturate(.78)}
+  .palette-orange .s-journey-card-panel{display:block;min-height:0;padding:16px}
+  .palette-orange .s-journey-card-heading{display:block}
+  .palette-orange .s-journey-card-heading>span{display:block;margin-bottom:14px}
+  .palette-orange .s-journey-card h3{font-size:22px}
+  .palette-orange .s-journey-card-panel>p{visibility:visible;opacity:1;transform:none;margin:14px 0 0;font-size:12px;transition:none}
+}
+
+@media(prefers-reduced-motion:reduce){.palette-orange .s-journey-card,.palette-orange .s-journey-card img,.palette-orange .s-journey-card-panel>p{transition:none}}

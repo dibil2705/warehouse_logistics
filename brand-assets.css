@@ -1,0 +1,29 @@
+/* Responsive web lockup: original grid geometry, transparent mark, readable name. */
+html{scroll-padding-top:96px}
+.header,.hero-at-top .header{background:#f6f5f1f5;border-bottom:1px solid #dfdfd8;backdrop-filter:blur(12px)}
+.header .header-inner{height:80px;gap:28px}
+a.brand{display:inline-flex;align-items:center;justify-content:flex-start;flex-shrink:0;gap:12px;width:auto;height:auto;max-width:100%;letter-spacing:normal;background:transparent;line-height:1;text-decoration:none;overflow:visible}
+a.brand .brand-symbol{display:block;width:46px;height:46px;max-width:none;object-fit:contain;flex-shrink:0;transform:none;filter:none;background:transparent}
+a.brand .brand-type{display:flex;flex-direction:column;gap:6px;color:#2a2c2b;text-align:left}
+a.brand .brand-name{font-family:Manrope,Arial,sans-serif;font-size:25px;font-weight:650;line-height:1.1;letter-spacing:-.8px;color:#2a2c2b}
+a.brand .brand-descriptor{font-family:Manrope,Arial,sans-serif;font-size:7px;font-weight:600;line-height:1.3;letter-spacing:.17em;color:#6f746e;white-space:nowrap}
+.header .desktop-nav{gap:24px;align-items:center}
+.header .desktop-nav a{font-size:12px;line-height:1.5;text-transform:none;letter-spacing:0;white-space:nowrap}
+.header .account-link,.header .header-account{font-size:12px}
+.header .account-link{min-height:42px;display:inline-flex;align-items:center;padding:10px 15px}
+.header .menu-toggle{min-width:44px;min-height:44px;flex-shrink:0}
+.cinematic-hero{margin-top:-80px}
+.footer a.brand{width:auto;height:auto;background:transparent;border-radius:0}
+.footer .footer-grid>div:first-child{min-width:0}
+.footer .brand .brand-symbol{width:42px;height:42px}
+.footer .brand .brand-name{font-size:23px}
+.footer .brand .brand-descriptor{font-size:6.4px}
+.dash-brand,.cabinet-brand{display:inline-flex;align-items:center;gap:8px;letter-spacing:0!important;font-size:14px!important;font-weight:600;color:#2a2c2b!important;white-space:nowrap}
+.dash-brand>img,.cabinet-brand>img{width:27px;height:27px;background:transparent;flex-shrink:0;object-fit:contain}
+.network-core{background:transparent;box-shadow:none}
+.network-core>img{width:62px;height:62px;object-fit:contain}
+.rocket-page .cabinet-demo-top{padding-top:18px;padding-bottom:18px}
+@media(max-width:1180px){.header .header-account{display:none}.header .header-inner{gap:20px}.header .desktop-nav{gap:20px}.header .desktop-nav a{font-size:11px}.header .header-actions{gap:14px}.header .button-small{font-size:11px;padding-inline:15px;gap:14px}}
+@media(max-width:960px){.header .desktop-nav{display:none}.header .menu-toggle{display:block}.header .account-link{display:none}.header .header-actions{margin-left:auto}.header .header-inner{gap:18px}}
+@media(max-width:700px){html{scroll-padding-top:84px}.header .header-inner{height:68px;gap:12px}.header .header-account,.header .header-actions>.button{display:none}.header a.brand{gap:9px}.header a.brand .brand-symbol{width:36px;height:36px}.header a.brand .brand-name{font-size:22px;letter-spacing:-.7px}.header a.brand .brand-type{gap:4px}.header a.brand .brand-descriptor{font-size:6px;letter-spacing:.14em}.cinematic-hero{margin-top:-68px}.footer .footer-top{align-items:flex-start}.footer .footer-grid>div:first-child{align-items:flex-start;gap:20px}.footer .brand .brand-symbol{width:35px;height:35px}.footer .brand .brand-name{font-size:21px}.footer .brand .brand-descriptor{font-size:5.8px}.dash-brand,.cabinet-brand{font-size:12px!important;gap:6px}.dash-brand>img,.cabinet-brand>img{width:25px;height:25px}}
+@media(max-width:360px){.header a.brand .brand-symbol{width:33px;height:33px}.header a.brand .brand-name{font-size:20px}.header a.brand .brand-descriptor{font-size:5.5px}.header a.brand{gap:8px}.rocket-page .footer-grid>div:first-child{flex-wrap:wrap;gap:12px}}
