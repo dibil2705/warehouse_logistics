@@ -102,7 +102,7 @@
   .network-map-node:hover .network-node-core,.network-map-node:focus-visible .network-node-core,.warehouse-map-stage:hover .warehouse-map-badge,.warehouse-map-controls button:hover,.warehouse-map-motion:hover,.warehouse-map-modes button:hover { transform: none; }
 }
 
-/* Open map and searchable warehouse list. */
+/* Open map with warehouse details. */
 .s-network-map { overflow: visible; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
 .warehouse-map-stage { background: transparent; }
 .warehouse-map-stage::before { display: none; }
@@ -113,25 +113,7 @@
 .warehouse-map-badge { border: 0; background: transparent; box-shadow: none; backdrop-filter: none; padding: 0; }
 .warehouse-map-modes { border: 0; background: transparent; }
 .warehouse-map-footer { padding: 8px 0 0; border: 0; background: transparent; }
-.warehouse-finder { border-top: 1px solid #d7d0c8; border-bottom: 1px solid #d7d0c8; }
-.warehouse-finder summary { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 0; cursor: pointer; list-style: none; }
-.warehouse-finder summary::-webkit-details-marker { display: none; }
-.warehouse-finder summary strong,.warehouse-finder summary small { display: block; }
-.warehouse-finder summary strong { font-size: 16px; color: #342c27; }
-.warehouse-finder summary small { margin-top: 3px; font-size: 11px; color: #8a8075; }
-.warehouse-finder summary>span:last-child { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: #ef532b; background: #f9e8dc; font-size: 19px; transition: transform .25s ease; }
-.warehouse-finder[open] summary>span:last-child { transform: rotate(90deg); }
-.warehouse-map-footer .warehouse-finder label { margin: 2px 0 8px; font-size: 11px; }
-.warehouse-search { display: block; width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid #ddd3ca; border-radius: 8px; background: #fff; color: #342c27; font: 13px Manrope, Arial, sans-serif; }
-.warehouse-results { max-height: 240px; overflow-y: auto; margin: 10px 0 14px; }
-.warehouse-results button { display: block; width: 100%; padding: 11px 9px; border-bottom: 1px solid #e7e0d9; background: transparent; text-align: left; color: #342c27; }
-.warehouse-results button[hidden] { display: none; }
-.warehouse-results button strong,.warehouse-results button span { display: block; }
-.warehouse-results button strong { font-size: 12px; }
-.warehouse-results button span { margin-top: 3px; color: #877d72; font-size: 10px; line-height: 1.5; }
-.warehouse-results button:hover,.warehouse-results button.is-selected { background: #fff2e8; }
-.warehouse-no-results { color: #877d72; font-size: 12px; }
 @media (hover: hover) and (pointer: fine) { .s-network-map:hover { border-color: transparent; box-shadow: none; } .warehouse-map-stage:hover .warehouse-map-badge { box-shadow: none; } }
 @keyframes network-drift { from { transform: translate(-9px, 4px) rotate(-.45deg); } to { transform: translate(9px, -5px) rotate(.45deg); } }
 @keyframes network-dot-wave { 0%,100% { opacity: .52; fill: #b6ada3; } 50% { opacity: 1; fill: #d87750; } }
-@media (prefers-reduced-motion: reduce) { .network-map-scene,.network-dots,.network-node-pulse { animation: none; } .network-dot,.warehouse-finder summary>span:last-child { transition: none; } .network-dot:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .network-map-scene,.network-dots,.network-node-pulse { animation: none; } .network-dot { transition: none; } .network-dot:hover { transform: none; } }

@@ -19,10 +19,10 @@
 <link rel="stylesheet" href="orange-refinements.css?v=flow-bidirectional">
 <script src="header-effects.js?v=1" defer></script>
 <link rel="stylesheet" href="hero-variants.css?v=compact-panels">
-<link rel="stylesheet" href="warehouse-dot-map.css?v=large-repel">
+<link rel="stylesheet" href="warehouse-dot-map.css?v=moscow-larger">
 <link rel="stylesheet" href="layout-grid.css?v=1">
 <script src="assets/warehouse-map-data.js?v=1" defer></script>
-<script src="warehouse-dot-map.js?v=brownian-hover" defer></script>
+<script src="warehouse-dot-map.js?v=moscow-larger" defer></script>
 </head>
 <body id="top" class="rocket-page palette-page palette-orange">
   <a class="skip-link" href="#main">Перейти к содержанию</a>
@@ -62,14 +62,7 @@
     <p class="warehouse-map-message" data-map-message role="status">Карта загрузится при просмотре раздела.</p>
   </div>
   <div class="warehouse-map-footer">
-    <details class="warehouse-finder" data-map-finder>
-      <summary><span><strong>Выбрать склад</strong><small>24 площадки в Москве и области</small></span><span aria-hidden="true">↗</span></summary>
-      <label for="warehouse-search">Поиск по названию или адресу</label>
-      <input id="warehouse-search" class="warehouse-search" data-map-search type="search" placeholder="Например, Химки или Дмитров" autocomplete="off" disabled>
-      <div class="warehouse-results" data-map-results aria-label="Список складов"></div>
-      <p class="warehouse-no-results" data-map-empty hidden>Ничего не найдено. Попробуйте другое название.</p>
-    </details>
-    <div class="warehouse-map-card" data-map-card hidden>
+<div class="warehouse-map-card" data-map-card hidden>
       <button type="button" data-map-card-close aria-label="Закрыть карточку склада">×</button>
       <strong data-map-card-title></strong><p data-map-card-address></p>
       <small>Ориентировочное расположение по адресу</small>

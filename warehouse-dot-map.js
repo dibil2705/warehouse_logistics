@@ -5,10 +5,6 @@
   const stage = shell.querySelector('.warehouse-map-stage');
   const canvas = shell.querySelector('.warehouse-map-canvas');
   const message = shell.querySelector('[data-map-message]');
-  const finder = shell.querySelector('[data-map-finder]');
-  const search = shell.querySelector('[data-map-search]');
-  const results = shell.querySelector('[data-map-results]');
-  const empty = shell.querySelector('[data-map-empty]');
   const card = shell.querySelector('[data-map-card]');
   const modes = [...shell.querySelectorAll('[data-map-mode]')];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -246,24 +242,23 @@
   function setMode(value) {
     if (!svg) return;
     cancelAnimationFrame(frame);
-    mode = value; camera = { scale: mode === 'country' ? 1.3 : 1, x: 0, y: 0 }; spider = null;
+    mode = value; camera = { scale: mode === 'country' ? 1.3 : 1.4, x: 0, y: 0 }; spider = null;
     shell.dataset.mapView = mode;
     modes.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mapMode === mode)));
-    svg.setAttribute('aria-label', mode === 'country' ? 'Интерактивная точечная карта России. Маркер Москвы открывает 24 склада.' : 'Точечная карта Москвы и области. Выберите склад на карте или в списке.');
+    svg.setAttribute('aria-label', mode === 'country' ? 'Интерактивная точечная карта России. Маркер Москвы открывает 24 склада.' : 'Точечная карта Москвы и области. Выберите склад на карте.');
     drawDots(); renderNodes();
   }
   function openLocation(row) {
     selectedId = row.id;
-    results.querySelectorAll('button').forEach(button => button.classList.toggle('is-selected', button.dataset.id === row.id));
     card.querySelector('[data-map-card-title]').textContent = row.name;
     card.querySelector('[data-map-card-address]').textContent = row.address;
     card.querySelector('a').href = 'https://yandex.ru/maps/?text=' + encodeURIComponent(row.address);
     card.hidden = false; updateMotion(); renderNodes();
   }
   function closeCard() {
-    selectedId = ''; card.hidden = true; results.querySelectorAll('button').forEach(button => button.classList.remove('is-selected')); updateMotion(); if (svg) renderNodes();
+    selectedId = ''; card.hidden = true; updateMotion(); if (svg) renderNodes();
   }
-  shell.querySelector('[data-map-card-close]').addEventListener('click', () => { closeCard(); finder.open = true; search.focus({ preventScroll: true }); });
+  shell.querySelector('[data-map-card-close]').addEventListener('click', () => { closeCard(); svg?.focus({ preventScroll: true }); });
 
   async function initialize() {
     if (initialized) return;
@@ -280,35 +275,6 @@
       dotField = new DotField(canvas, svg);
       dotField.onResize = () => renderNodes();
       dotField.setActive(inView && !document.hidden);
-      locations.forEach(row => {
-        const button = document.createElement('button');
-        button.type = 'button'; button.dataset.id = row.id;
-        const name = document.createElement('strong'); name.textContent = row.name;
-        const address = document.createElement('span'); address.textContent = row.address;
-        button.append(name, address);
-        button.addEventListener('click', () => {
-          setMode('warehouses');
-          const plot = plots.find(item => item.id === row.id);
-          openLocation(row);
-          finder.open = false;
-          if (plot) {
-            const neighbours = plots.filter(item => item.id !== row.id && Math.hypot(item.point[0] - plot.point[0], item.point[1] - plot.point[1]) < 15);
-            if (neighbours.length) spider = { point: plot.point, ids: [row.id, ...neighbours.map(item => item.id)] };
-            moveCamera({ scale: 2.5, x: (500 - plot.point[0]) * 2.5, y: (320 - plot.point[1]) * 2.5 });
-          }
-        });
-        results.append(button);
-      });
-      search.disabled = false;
-      search.addEventListener('input', () => {
-        const query = search.value.trim().toLocaleLowerCase('ru');
-        let count = 0;
-        results.querySelectorAll('button').forEach(button => {
-          button.hidden = !button.textContent.toLocaleLowerCase('ru').includes(query);
-          if (!button.hidden) count++;
-        });
-        empty.hidden = count > 0;
-      });
       modes.forEach(button => { button.disabled = false; button.addEventListener('click', () => { closeCard(); setMode(button.dataset.mapMode); }); });
       const zoom = direction => { spider = null; moveCamera({ scale: camera.scale * direction, x: camera.x * direction, y: camera.y * direction }); };
       svg.addEventListener('keydown', event => {
