@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="brand-assets.css?v=compact-logo">
   <script src="script.js?v=ladsklad" defer></script>
   <link rel="stylesheet" href="palette-variants.css?v=1">
-  <script src="rocket.js" defer></script>
+  <script src="rocket.js?v=back-to-top" defer></script>
 <link rel="stylesheet" href="landing-structure.css?v=minimal-white">
 <link rel="stylesheet" href="header-effects.css?v=white">
-<link rel="stylesheet" href="orange-refinements.css?v=journey-smooth">
+<link rel="stylesheet" href="orange-refinements.css?v=flow-stack">
 <script src="header-effects.js?v=1" defer></script>
-<link rel="stylesheet" href="hero-variants.css?v=2">
+<link rel="stylesheet" href="hero-variants.css?v=3">
 <script src="hero-variants.js?v=1" defer></script>
-<link rel="stylesheet" href="warehouse-dot-map.css?v=3">
+<link rel="stylesheet" href="warehouse-dot-map.css?v=5">
 <script src="assets/warehouse-map-data.js?v=1" defer></script>
-<script src="warehouse-dot-map.js?v=3" defer></script>
+<script src="warehouse-dot-map.js?v=5" defer></script>
 </head>
-<body class="rocket-page palette-page palette-orange">
+<body id="top" class="rocket-page palette-page palette-orange">
   <a class="skip-link" href="#main">Перейти к содержанию</a>
-  <header class="header" id="top"><div class="container header-inner">
+  <header class="header"><div class="container header-inner">
     <a class="brand" href="#top" aria-label="ЛАДСКЛАД — на главную"><img class="brand-symbol" src="assets/palletika/symbol-orange.svg" width="528" height="528" alt=""><span class="brand-type"><span class="brand-name">ЛАДСКЛАД</span><span class="brand-descriptor">СКЛАДСКАЯ ЛОГИСТИКА</span></span></a>
     <nav class="desktop-nav" aria-label="Основная навигация"><a href="#how">Как работаем</a><a href="#platform">Платформа</a><a href="#network">Складская сеть</a><a href="#advantages">Преимущества</a><a href="#contacts">Контакты</a></nav>
     <a class="account-link" href="#platform" data-app-action="login">Войти в кабинет <span aria-hidden="true">↗</span></a>
@@ -42,14 +42,8 @@
         <h1 id="platform-hero-title">Складская логистика,<br>которой <em>удобно управлять</em></h1>
         <p class="platform-hero-lead">Подбирайте склад, управляйте заказами и общайтесь с менеджером — в одном рабочем пространстве.</p>
         <div class="platform-hero-actions"><button class="button" data-app-action="request">Подобрать склад <span aria-hidden="true">↗</span></button></div>
-        <ul class="platform-hero-features" aria-label="Возможности сервиса">
-          <li><img src="assets/icons/clipboard-list.svg" width="42" height="42" alt=""><div><strong>Заказы</strong><span>Создание, статусы и история</span></div></li>
-          <li><img src="assets/icons/files.svg" width="42" height="42" alt=""><div><strong>Документы</strong><span>Договоры, акты и накладные</span></div></li>
-          <li><img src="assets/icons/messages-square.svg" width="42" height="42" alt=""><div><strong>Коммуникация</strong><span>Переписка в контексте заказа</span></div></li>
-        </ul>
       </div>
       <div class="platform-hero-visual"><img src="assets/ladsklad-platform-hero.png" width="1832" height="859" alt="Концепция интерфейса ЛАДСКЛАД: заказы на хранение и отгрузку, список складов, документы и сообщения менеджеру" fetchpriority="high"></div>
-      <p class="platform-hero-caption">Концепция интерфейса. Платформа готовится к запуску.</p>
     </section>
     <section class="rocket-hero hero-variant" id="hero-warehouse" role="tabpanel" aria-labelledby="hero-tab-warehouse" hidden><div class="container">
       <div class="hero-heading"><div><p class="overline">ИНТЕГРАТОР СКЛАДСКИХ УСЛУГ</p><h1 id="rocket-title">Объединяем бизнес<br><span>и складских операторов</span></h1></div></div>
@@ -57,12 +51,16 @@
       <div class="rocket-hero-art"><div class="hero-art-top"><span>ГРУЗУ — МЕСТО.<br>БИЗНЕСУ — ДВИЖЕНИЕ.</span><span class="scene-cross" aria-hidden="true">+</span></div><svg class="scene-route" viewBox="0 0 800 430" fill="none" aria-hidden="true"><path d="M-20 330H120Q180 330 180 270V190Q180 135 240 135H620Q685 135 685 70V-20"/><path d="M-20 370H160Q220 370 220 310V230Q220 175 280 175H660Q725 175 725 110V-20"/><circle cx="180" cy="250" r="10"/><circle cx="590" cy="135" r="10"/></svg><span class="scene-location location-one">Москва</span><span class="scene-location location-two">Химки</span><img src="assets/rocket-logistics.png" width="1280" height="1280" alt="Оранжевый складской погрузчик с паллетой упакованного груза" loading="lazy"><span class="hero-art-label"><span class="scene-dot" aria-hidden="true"></span>От одной партии<br>до новых масштабов</span><span class="scene-footer">ПОДБОР · ХРАНЕНИЕ · СОПРОВОЖДЕНИЕ</span></div></div>
     </div></section>
 <section class="s-section s-how" id="how" aria-labelledby="how-title"><div class="container">
-<div class="s-heading"><h2 id="how-title">Как устроена работа<br>с «ЛАДСКЛАД»</h2><p>ЛАДСКЛАД объединяет клиентов и 3PL-операторов в одной системе работы.</p></div>
-<div class="s-flow"><article><svg class="s-flow-icon" viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2M9 21v-3m6 3v-3"/></svg><h3>Клиент</h3><p>Рассказываете, что нужно хранить, в каком объёме и на какой срок.</p></article><span class="s-flow-arrow" aria-hidden="true"><svg viewBox="0 0 32 24" width="32" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h26m-5-5 5 5-5 5M29 16H3m5-5-5 5 5 5"/></svg></span><article class="s-flow-core"><svg class="s-flow-icon" viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><circle cx="4" cy="4" r="2"/><circle cx="20" cy="4" r="2"/><circle cx="4" cy="20" r="2"/><circle cx="20" cy="20" r="2"/><path d="m5.5 5.5 4.3 4.3m4.4 4.4 4.3 4.3m-13 0 4.3-4.3m4.4-4.4 4.3-4.3"/></svg><h3>ЛАДСКЛАД</h3><p>Подбираем склад, согласуем услуги и координируем работу.</p></article><span class="s-flow-arrow" aria-hidden="true"><svg viewBox="0 0 32 24" width="32" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h26m-5-5 5 5-5 5M29 16H3m5-5-5 5 5 5"/></svg></span><article><svg class="s-flow-icon" viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21V8l9-5 9 5v13M1 21h22M3 9h18M8 21V13h8v8m-8-4h8m-4-4v8"/></svg><h3>Складские операторы</h3><p>Принимают, хранят и отгружают ваш товар по согласованным условиям.</p></article></div>
+<div class="s-heading"><h2 id="how-title">Как устроена работа<br>с «ЛАДСКЛАД»</h2><p class="s-how-note">ЛАДСКЛАД объединяет клиентов и 3PL-операторов в одной системе работы.</p></div>
+<div class="s-flow"><article><svg class="s-flow-icon" viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2M9 21v-3m6 3v-3"/></svg><h3>Клиент</h3><p>Рассказываете, что нужно хранить, в каком объёме и на какой срок.</p></article><span class="s-flow-arrow" aria-hidden="true"><svg viewBox="0 0 100 44" width="100" height="44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g><path d="M4 31C33 14 64 13 91 24M81 15l11 9-12 7"/></g></svg></span><article class="s-flow-core s-flow-stack"><img class="s-flow-stack-image" src="assets/ladsklad-integration-stack.svg" width="520" height="410" alt=""><h3 class="s-flow-stack-title">ЛАДСКЛАД</h3><p>Подбираем склад, согласуем услуги и координируем работу.</p></article><span class="s-flow-arrow" aria-hidden="true"><svg viewBox="0 0 100 44" width="100" height="44" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(100 0) scale(-1 1)"><path d="M4 31C33 14 64 13 91 24M81 15l11 9-12 7"/></g></svg></span><article><svg class="s-flow-icon" viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 21V8l9-5 9 5v13M1 21h22M3 9h18M8 21V13h8v8m-8-4h8m-4-4v8"/></svg><h3>Складские операторы</h3><p>Принимают, хранят и отгружают ваш товар по согласованным условиям.</p></article></div>
 
 </div></section>
-<section class="s-section s-platform" id="platform" aria-labelledby="platform-title"><div class="container s-platform-grid"><div><h2 id="platform-title" tabindex="-1">Заказы, документы<br><em>и связь с менеджером</em></h2><p class="s-lead">Управляйте складскими услугами в общем рабочем пространстве.</p><ul class="s-feature-list"><li><b>Заказы</b><span>Создание, статусы и история</span></li><li><b>Документы</b><span>Договоры, акты и накладные</span></li><li><b>Коммуникация</b><span>Переписка в контексте заказа</span></li></ul><a class="s-link" href="#platform" data-app-action="login">Войти в приложение ↗</a></div>
-<div class="s-app"><div class="s-app-bar"><strong>ЛАДСКЛАД<span> / Рабочее пространство</span></strong><span>МК</span></div><div class="s-app-body"><div class="s-app-title"><h3>Заказы</h3><span>+ Новый заказ</span></div><div class="s-order"><div><small>№ 0248 · Москва</small><h4>Хранение и обработка</h4><p>24 паллеты · Товары для дома</p></div><span class="s-status">В работе</span></div><div class="s-progress"><span>Принят</span><span>На складе</span><span>Отгружен</span></div><div class="s-app-split"><div><h4>Документы <span>02</span></h4><p>↗ Договор хранения.pdf</p><p>↗ Акт приёмки.pdf</p></div><div><h4>Менеджер по заказу</h4><p class="s-chat">Приёмка завершена. Акт добавлен в документы.</p><small>Вся переписка сохранена</small></div></div></div><p class="s-app-caption">Концепция интерфейса. Платформа готовится к запуску.</p></div>
+<section class="s-section s-platform" id="platform" aria-labelledby="platform-title"><div class="container s-platform-grid"><div><h2 id="platform-title" tabindex="-1">Заказы, документы<br><em>и связь с менеджером</em></h2><p class="s-lead">Управляйте складскими услугами в общем рабочем пространстве.</p><ul class="s-feature-list platform-service-panels">
+<li><img src="assets/icons/clipboard-list.svg" width="42" height="42" alt=""><div><b>Заказы</b><span>Создание, статусы и история</span></div></li>
+<li><img src="assets/icons/files.svg" width="42" height="42" alt=""><div><b>Документы</b><span>Договоры, акты и накладные</span></div></li>
+<li><img src="assets/icons/messages-square.svg" width="42" height="42" alt=""><div><b>Коммуникация</b><span>Переписка в контексте заказа</span></div></li>
+</ul><a class="s-link" href="#platform" data-app-action="login">Войти в приложение ↗</a></div>
+<div class="s-app"><div class="s-app-bar"><strong>ЛАДСКЛАД<span> / Рабочее пространство</span></strong><span>МК</span></div><div class="s-app-body"><div class="s-app-title"><h3>Заказы</h3><span>+ Новый заказ</span></div><div class="s-order"><div><small>№ 0248 · Москва</small><h4>Хранение и обработка</h4><p>24 паллеты · Товары для дома</p></div><span class="s-status">В работе</span></div><div class="s-progress"><span>Принят</span><span>На складе</span><span>Отгружен</span></div><div class="s-app-split"><div><h4>Документы <span>02</span></h4><p>↗ Договор хранения.pdf</p><p>↗ Акт приёмки.pdf</p></div><div><h4>Менеджер по заказу</h4><p class="s-chat">Приёмка завершена. Акт добавлен в документы.</p><small>Вся переписка сохранена</small></div></div></div></div>
 </div></section>
 <section class="s-section s-network" id="network" aria-labelledby="network-title"><div class="container"><div class="s-heading"><h2 id="network-title">24 склада.<br>Хранение и фулфилмент.</h2></div><div class="s-network-grid"><div class="s-network-map" data-motion-paused="true" role="group" aria-label="Интерактивная карта складской сети">
   <div class="warehouse-map-stage">

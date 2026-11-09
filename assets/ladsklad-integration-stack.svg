@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 410" fill="none">
+  <defs>
+    <radialGradient id="glow"><stop stop-color="#ff7629" stop-opacity=".24"/><stop offset="1" stop-color="#ffad75" stop-opacity="0"/></radialGradient>
+    <linearGradient id="lower" x1="110" y1="100" x2="370" y2="320" gradientUnits="userSpaceOnUse"><stop stop-color="#ffe2a8"/><stop offset="1" stop-color="#ffb958"/></linearGradient>
+    <linearGradient id="middle" x1="140" y1="70" x2="360" y2="310" gradientUnits="userSpaceOnUse"><stop stop-color="#ffb63e"/><stop offset=".6" stop-color="#ff770c"/><stop offset="1" stop-color="#ff4e00"/></linearGradient>
+    <linearGradient id="upper" x1="150" y1="42" x2="330" y2="275" gradientUnits="userSpaceOnUse"><stop stop-color="#ffb66e"/><stop offset=".48" stop-color="#ff8b3e"/><stop offset="1" stop-color="#ff5a17"/></linearGradient>
+    <linearGradient id="side" x1="260" y1="160" x2="260" y2="295" gradientUnits="userSpaceOnUse"><stop stop-color="#ff8628"/><stop offset="1" stop-color="#ff4b00"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-40%" width="160%" height="200%"><feDropShadow dx="0" dy="12" stdDeviation="13" flood-color="#f36a20" flood-opacity=".2"/></filter>
+    <path id="edge" d="M52 145v33c0 13 7 23 22 32l160 92c17 10 35 10 52 0l160-92c15-9 22-19 22-32v-33c0 13-7 23-22 32l-160 92c-17 10-35 10-52 0L74 177c-15-9-22-19-22-32Z"/>
+  </defs>
+  <ellipse cx="260" cy="200" rx="255" ry="205" fill="url(#glow)"/>
+  <g stroke="#fff" stroke-opacity=".75" stroke-width="1.5"><circle cx="260" cy="190" r="145"/><circle cx="260" cy="190" r="195"/><circle cx="260" cy="190" r="245"/></g>
+  <g transform="translate(0 66)" filter="url(#shadow)">
+    <use href="#edge" fill="url(#lower)"/>
+    <rect width="240" height="240" rx="36" transform="matrix(.866 .5 -.866 .5 260 25)" fill="url(#lower)" stroke="#fff1ce" stroke-opacity=".7"/>
+  </g>
+  <g transform="translate(0 32)" filter="url(#shadow)">
+    <use href="#edge" fill="url(#side)"/>
+    <rect width="240" height="240" rx="36" transform="matrix(.866 .5 -.866 .5 260 25)" fill="url(#middle)" stroke="#fff0c7" stroke-opacity=".7"/>
+  </g>
+  <g filter="url(#shadow)">
+    <use href="#edge" fill="url(#side)"/>
+    <rect width="240" height="240" rx="36" transform="matrix(.866 .5 -.866 .5 260 25)" fill="url(#upper)" stroke="#ffe4d3" stroke-width="1.5"/>
+  </g>
+  <g stroke="#fff" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m260 77 35 20v41l-35 20-35-20V97l35-20Z"/>
+    <path d="m225 97 35 20 35-20m-35 20v41m-35-40 17 10v15"/>
+  </g>
+  <text x="260" y="202" text-anchor="middle" fill="#fff" font-family="Manrope,Arial,sans-serif" font-size="29" font-weight="750" letter-spacing="-.5">ЛАДСКЛАД</text>
+</svg>

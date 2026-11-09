@@ -13,12 +13,104 @@
   const modes = [...shell.querySelectorAll('[data-map-mode]')];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const NS = 'http://www.w3.org/2000/svg';
+  // The dot field is drawn directly, with no map SDK or image layer.
+  class DotField {
+    constructor(host, overlay) {
+      this.canvas = document.createElement('canvas');
+      this.canvas.className = 'network-dot-canvas';
+      this.canvas.setAttribute('aria-hidden', 'true');
+      host.prepend(this.canvas);
+      this.context = this.canvas.getContext('2d', { alpha: true });
+      this.host = host; this.points = []; this.pointer = null;
+      this.camera = { scale: 1, x: 0, y: 0 };
+      this.active = false; this.raf = 0; this.lastTime = 0;
+      this.resize = new ResizeObserver(() => this.measure());
+      this.resize.observe(host); this.measure();
+      overlay.addEventListener('pointermove', event => {
+        const rect = this.host.getBoundingClientRect();
+        this.pointer = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+        this.requestDraw();
+      }, { passive: true });
+      overlay.addEventListener('pointerdown', event => {
+        const rect = this.host.getBoundingClientRect();
+        this.pointer = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+        this.requestDraw();
+      }, { passive: true });
+      overlay.addEventListener('pointerleave', () => { this.pointer = null; this.requestDraw(); });
+      overlay.addEventListener('pointerup', event => { if (event.pointerType === 'touch') setTimeout(() => { this.pointer = null; this.requestDraw(); }, 280); });
+      overlay.addEventListener('pointercancel', () => { this.pointer = null; this.requestDraw(); });
+    }
+    measure() {
+      const rect = this.host.getBoundingClientRect();
+      this.width = rect.width; this.height = rect.height;
+      this.dpr = Math.min(2, window.devicePixelRatio || 1);
+      this.canvas.width = Math.max(1, Math.round(this.width * this.dpr));
+      this.canvas.height = Math.max(1, Math.round(this.height * this.dpr));
+      this.ratio = Math.min(this.width / 1000, this.height / 600);
+      this.offsetX = (this.width - 1000 * this.ratio) / 2;
+      this.offsetY = (this.height - 600 * this.ratio) / 2;
+      this.onResize?.();
+      this.requestDraw();
+    }
+    setPoints(points) {
+      this.points = points.map(([x, y], index) => ({ x, y, radius: 0, phase: index * .37 }));
+      this.requestDraw();
+    }
+    setCamera(camera) { this.camera = { ...camera }; this.requestDraw(); }
+    setActive(active) {
+      this.active = active;
+      if (!active) { cancelAnimationFrame(this.raf); this.raf = 0; this.lastTime = 0; }
+      else this.requestDraw();
+    }
+    requestDraw() {
+      if (this.active && !this.raf) this.raf = requestAnimationFrame(time => this.draw(time));
+    }
+    draw(time) {
+      this.raf = 0;
+      if (!this.active || !this.width || !this.height) return;
+      const dt = this.lastTime ? Math.min(50, time - this.lastTime) : 16;
+      this.lastTime = time;
+      const context = this.context, camera = this.camera;
+      const baseRadius = Math.max(.85, Math.min(1.55, this.ratio * 2.05));
+      const reach = Math.max(58, Math.min(100, this.width * .14));
+      const ease = reduced.matches ? 1 : 1 - Math.exp(-dt / 90);
+      let nearest = -1, nearestDistance = Infinity;
+      for (let index = 0; index < this.points.length; index++) {
+        const point = this.points[index];
+        point.screenX = this.offsetX + ((point.x - 500) * camera.scale + 500 + camera.x) * this.ratio;
+        point.screenY = this.offsetY + ((point.y - 320) * camera.scale + 320 + camera.y) * this.ratio;
+        point.distance = this.pointer ? Math.hypot(point.screenX - this.pointer.x, point.screenY - this.pointer.y) : Infinity;
+        if (point.distance < nearestDistance) { nearestDistance = point.distance; nearest = index; }
+      }
+      context.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+      context.clearRect(0, 0, this.width, this.height);
+      context.fillStyle = '#30332f';
+      context.beginPath();
+      for (let index = 0; index < this.points.length; index++) {
+        const point = this.points[index];
+        const proximity = Math.max(0, 1 - point.distance / reach);
+        const influence = proximity * proximity * (3 - 2 * proximity);
+        // Nearby dots also grow, with a smaller response that fades with distance.
+        const response = index === nearest && nearestDistance < reach * .4 ? 1.2 * influence : .42 * influence;
+        const breath = reduced.matches ? 0 : Math.sin(time * .0009 + point.phase) * .025;
+        const target = baseRadius * (1 + breath + response);
+        point.radius += (target - point.radius) * ease;
+        if (point.screenX < -8 || point.screenX > this.width + 8 || point.screenY < -8 || point.screenY > this.height + 8) continue;
+        context.moveTo(point.screenX + point.radius, point.screenY);
+        context.arc(point.screenX, point.screenY, Math.max(.1, point.radius), 0, Math.PI * 2);
+      }
+      context.fill();
+      if (!reduced.matches) this.requestDraw();
+    }
+  }
   let inView = false, initialized = false;
   let svg, viewport, dotsLayer, nodesLayer, geography, locations, plots, mode = 'country', selectedId = '';
   let camera = { scale: 1, x: 0, y: 0 }, frame = 0, drag = null, activeNodes = [], spider = null;
+  let dotField;
 
   function updateMotion() {
     shell.dataset.motionPaused = String(!inView || document.hidden || reduced.matches);
+    dotField?.setActive(inView && !document.hidden);
   }
   document.addEventListener('visibilitychange', updateMotion);
   reduced.addEventListener('change', updateMotion);
@@ -31,12 +123,14 @@
     return node;
   }
   function positionNode(node, x, y) {
-    node.setAttribute('transform', `translate(${x} ${y}) scale(${1 / camera.scale})`);
+    const legibility = Math.max(1, .68 / (dotField?.ratio || 1));
+    node.setAttribute('transform', `translate(${x} ${y}) scale(${legibility / camera.scale})`);
   }
   function paintCamera() {
     viewport.setAttribute('transform', `translate(${500 + camera.x} ${320 + camera.y}) scale(${camera.scale}) translate(-500 -320)`);
     activeNodes.forEach(item => positionNode(item.node, item.x, item.y));
     shell.dataset.zoom = camera.scale.toFixed(2);
+    dotField?.setCamera(camera);
   }
   function moveCamera(target, duration = 550) {
     cancelAnimationFrame(frame);
@@ -56,11 +150,8 @@
     frame = requestAnimationFrame(tick);
   }
   function drawDots() {
-    const groups = Array.from({ length: 8 }, (_, index) => element('g', { class: 'network-dots network-dots-' + index }));
-    geography[mode === 'country' ? 'country' : 'region'].dots.forEach(([x, y], index) => {
-      groups[index % groups.length].append(element('circle', { cx: x, cy: y, r: 2.5, class: 'network-dot' }));
-    });
-    dotsLayer.replaceChildren(...groups);
+    dotField.setPoints(geography[mode === 'country' ? 'country' : 'region'].dots);
+    dotsLayer.replaceChildren();
   }
   function addStaticLabel(name, point) {
     const node = element('g', { class: 'network-city', 'aria-hidden': 'true' });
@@ -72,7 +163,7 @@
     const title = rows.length > 1 ? `${rows.length} склада: ${rows.map(row => row.name).join(', ')}. Нажмите, чтобы раскрыть.` : rows[0].name + '. ' + rows[0].address;
     const node = element('g', { class: 'network-map-node' + (selected ? ' is-selected' : ''), role: 'button', tabindex: 0, 'aria-label': title });
     node.append(element('title', {}, title));
-    node.append(element('circle', { r: 29, class: 'network-node-hit' }));
+    node.append(element('circle', { r: 36, class: 'network-node-hit' }));
     node.append(element('circle', { r: rows.length > 1 ? 25 : 19, class: 'network-node-pulse' }));
     node.append(element('circle', { r: rows.length > 1 ? 20 : 12, class: 'network-node-core' }));
     if (rows.length > 1) node.append(element('text', { y: 5, 'text-anchor': 'middle', class: 'network-node-count' }, String(rows.length)));
@@ -91,7 +182,7 @@
   function groupsForRegion() {
     const groups = [];
     plots.forEach(plot => {
-      const threshold = 41 / camera.scale;
+      const threshold = Math.max(41, 38 / (dotField?.ratio || 1)) / camera.scale;
       const group = groups.find(item => Math.hypot(item.x - plot.point[0], item.y - plot.point[1]) < threshold);
       const row = locations.find(item => item.id === plot.id);
       if (!row) return;
@@ -118,7 +209,8 @@
         const center = spider.point;
         spider.ids.forEach((id, index) => {
           const angle = index / spider.ids.length * Math.PI * 2 - Math.PI / 2;
-          const point = [center[0] + Math.cos(angle) * 48 / camera.scale, center[1] + Math.sin(angle) * 48 / camera.scale];
+          const radius = 65 * Math.max(1, .68 / (dotField?.ratio || 1)) / camera.scale;
+          const point = [center[0] + Math.cos(angle) * radius, center[1] + Math.sin(angle) * radius];
           nodesLayer.append(element('line', { x1: center[0], y1: center[1], x2: point[0], y2: point[1], class: 'network-spider-line', 'vector-effect': 'non-scaling-stroke' }));
           marker(point, [locations.find(row => row.id === id)]);
         });
@@ -169,6 +261,9 @@
       const scene = element('g', { class: 'network-map-scene' });
       viewport = element('g'); dotsLayer = element('g', { 'aria-hidden': 'true' }); nodesLayer = element('g');
       viewport.append(dotsLayer, nodesLayer); scene.append(viewport); svg.append(scene); canvas.append(svg);
+      dotField = new DotField(canvas, svg);
+      dotField.onResize = () => renderNodes();
+      dotField.setActive(inView && !document.hidden);
       locations.forEach(row => {
         const button = document.createElement('button');
         button.type = 'button'; button.dataset.id = row.id;

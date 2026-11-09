@@ -5,6 +5,17 @@ const updateBackToTop = () => { backToTop.hidden = window.scrollY < 500; };
 window.addEventListener('scroll', updateBackToTop, { passive: true });
 updateBackToTop();
 
+// A sticky header is not a reliable scroll target. Always return to the page origin.
+document.querySelectorAll('a[href="#top"]').forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, left: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+    const url = new URL(window.location.href);
+    url.hash = 'top';
+    window.history.replaceState(null, '', url);
+  });
+});
+
 // Industry examples are editorial content, not client logos or claimed projects.
 const industryTabs = [...document.querySelectorAll('.industry-tabs [role="tab"]')];
 function selectIndustry(tab, moveFocus = false) {
