@@ -53,7 +53,7 @@
       this.requestDraw();
     }
     setPoints(points) {
-      this.points = points.map(([x, y], index) => ({ x, y, radius: 0, phase: index * .37 }));
+      this.points = points.map(([x, y], index) => ({ x, y, radius: 0, offsetX: 0, offsetY: 0, phase: index * .37 }));
       this.requestDraw();
     }
     setCamera(camera) { this.camera = { ...camera }; this.requestDraw(); }
@@ -72,7 +72,7 @@
       this.lastTime = time;
       const context = this.context, camera = this.camera;
       const baseRadius = Math.max(.85, Math.min(1.55, this.ratio * 2.05));
-      const reach = Math.max(58, Math.min(100, this.width * .14));
+      const reach = Math.max(72, Math.min(132, this.width * .16));
       const ease = reduced.matches ? 1 : 1 - Math.exp(-dt / 90);
       let nearest = -1, nearestDistance = Infinity;
       for (let index = 0; index < this.points.length; index++) {
@@ -90,14 +90,21 @@
         const point = this.points[index];
         const proximity = Math.max(0, 1 - point.distance / reach);
         const influence = proximity * proximity * (3 - 2 * proximity);
-        // Nearby dots also grow, with a smaller response that fades with distance.
-        const response = index === nearest && nearestDistance < reach * .4 ? 1.2 * influence : .42 * influence;
+        // Strong focal growth, softer neighbouring growth and a small outward displacement.
+        const density = Math.min(1, this.ratio * 6.8 / (baseRadius * 4));
+        const response = index === nearest && nearestDistance < reach * .4 ? 4 * influence : .95 * influence * density;
         const breath = reduced.matches ? 0 : Math.sin(time * .0009 + point.phase) * .025;
         const target = baseRadius * (1 + breath + response);
         point.radius += (target - point.radius) * ease;
-        if (point.screenX < -8 || point.screenX > this.width + 8 || point.screenY < -8 || point.screenY > this.height + 8) continue;
-        context.moveTo(point.screenX + point.radius, point.screenY);
-        context.arc(point.screenX, point.screenY, Math.max(.1, point.radius), 0, Math.PI * 2);
+        const push = this.pointer && !reduced.matches ? Math.min(18, Math.max(9, this.width * .018)) * influence : 0;
+        const directionX = point.distance > .01 && this.pointer ? (point.screenX - this.pointer.x) / point.distance : Math.cos(point.phase);
+        const directionY = point.distance > .01 && this.pointer ? (point.screenY - this.pointer.y) / point.distance : Math.sin(point.phase);
+        point.offsetX += (directionX * push - point.offsetX) * ease;
+        point.offsetY += (directionY * push - point.offsetY) * ease;
+        const x = point.screenX + point.offsetX, y = point.screenY + point.offsetY;
+        if (x < -10 || x > this.width + 10 || y < -10 || y > this.height + 10) continue;
+        context.moveTo(x + point.radius, y);
+        context.arc(x, y, Math.max(.1, point.radius), 0, Math.PI * 2);
       }
       context.fill();
       if (!reduced.matches) this.requestDraw();
@@ -230,7 +237,7 @@
   function setMode(value) {
     if (!svg) return;
     cancelAnimationFrame(frame);
-    mode = value; camera = { scale: 1, x: 0, y: 0 }; spider = null;
+    mode = value; camera = { scale: mode === 'country' ? 1.3 : 1, x: 0, y: 0 }; spider = null;
     shell.dataset.mapView = mode;
     modes.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mapMode === mode)));
     svg.setAttribute('aria-label', mode === 'country' ? 'Интерактивная точечная карта России. Маркер Москвы открывает 24 склада.' : 'Точечная карта Москвы и области. Выберите склад на карте или в списке.');
