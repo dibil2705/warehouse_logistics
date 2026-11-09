@@ -7,7 +7,7 @@
   <meta name="description" content="Единая интеграция с сетью 3PL-операторов. Хранение, обработка и фулфилмент. Заказы, документы и коммуникация в общем рабочем пространстве.">
   <title>ЛАДСКЛАД — интегратор складских услуг и 3PL</title>
   <link rel="icon" href="assets/palletika/symbol-orange.svg" type="image/svg+xml">
-  <link rel="preload" as="image" href="assets/rocket-logistics.png">
+  <link rel="preload" as="image" href="assets/ladsklad-platform-hero.png">
   <link rel="stylesheet" href="rocket.css?v=orange-own">
   <script src="site-config.js"></script>
   <link rel="stylesheet" href="brand-assets.css?v=compact-logo">
@@ -16,22 +16,45 @@
   <script src="rocket.js" defer></script>
 <link rel="stylesheet" href="landing-structure.css?v=minimal-white">
 <link rel="stylesheet" href="header-effects.css?v=white">
-<link rel="stylesheet" href="orange-refinements.css?v=unified-closing">
+<link rel="stylesheet" href="orange-refinements.css?v=journey-smooth">
 <script src="header-effects.js?v=1" defer></script>
+<link rel="stylesheet" href="hero-variants.css?v=2">
+<script src="hero-variants.js?v=1" defer></script>
+<link rel="stylesheet" href="warehouse-dot-map.css?v=3">
+<script src="assets/warehouse-map-data.js?v=1" defer></script>
+<script src="warehouse-dot-map.js?v=3" defer></script>
 </head>
 <body class="rocket-page palette-page palette-orange">
   <a class="skip-link" href="#main">Перейти к содержанию</a>
-  <div class="utility-bar"><div class="container utility-inner"><span>Складская логистика для бизнеса</span></div></div>
   <header class="header" id="top"><div class="container header-inner">
     <a class="brand" href="#top" aria-label="ЛАДСКЛАД — на главную"><img class="brand-symbol" src="assets/palletika/symbol-orange.svg" width="528" height="528" alt=""><span class="brand-type"><span class="brand-name">ЛАДСКЛАД</span><span class="brand-descriptor">СКЛАДСКАЯ ЛОГИСТИКА</span></span></a>
     <nav class="desktop-nav" aria-label="Основная навигация"><a href="#how">Как работаем</a><a href="#platform">Платформа</a><a href="#network">Складская сеть</a><a href="#advantages">Преимущества</a><a href="#contacts">Контакты</a></nav>
     <a class="account-link" href="#platform" data-app-action="login">Войти в кабинет <span aria-hidden="true">↗</span></a>
     <button class="menu-toggle" aria-label="Открыть меню" aria-controls="mobile-nav" aria-expanded="false"><span></span><span></span></button>
   </div><nav class="mobile-nav" id="mobile-nav" aria-label="Мобильная навигация" hidden><a href="#how">Как работаем</a><a href="#platform">Платформа</a><a href="#network">Складская сеть</a><a href="#advantages">Преимущества</a><a href="#contacts">Контакты</a><a href="#platform" data-app-action="login">Войти в приложение</a></nav></header>
-  <main id="main" class="structured-landing"><section class="rocket-hero" aria-labelledby="rocket-title"><div class="container">
+  <main id="main" class="structured-landing"><div class="hero-options container"><div role="tablist" aria-label="Варианты первого экрана">
+      <button class="hero-option" id="hero-tab-platform" role="tab" aria-controls="hero-platform" aria-selected="true" data-hero-variant="platform">Интерфейс платформы</button>
+      <button class="hero-option" id="hero-tab-warehouse" role="tab" aria-controls="hero-warehouse" aria-selected="false" tabindex="-1" data-hero-variant="warehouse">Складская логистика</button>
+    </div></div>
+    <section class="platform-hero hero-variant" id="hero-platform" role="tabpanel" aria-labelledby="hero-tab-platform">
+      <div class="container platform-hero-copy">
+        <p class="overline">ЛАДСКЛАД · ИНТЕГРАТОР СКЛАДСКИХ УСЛУГ</p>
+        <h1 id="platform-hero-title">Складская логистика,<br>которой <em>удобно управлять</em></h1>
+        <p class="platform-hero-lead">Подбирайте склад, управляйте заказами и общайтесь с менеджером — в одном рабочем пространстве.</p>
+        <div class="platform-hero-actions"><button class="button" data-app-action="request">Подобрать склад <span aria-hidden="true">↗</span></button></div>
+        <ul class="platform-hero-features" aria-label="Возможности сервиса">
+          <li><img src="assets/icons/clipboard-list.svg" width="42" height="42" alt=""><div><strong>Заказы</strong><span>Создание, статусы и история</span></div></li>
+          <li><img src="assets/icons/files.svg" width="42" height="42" alt=""><div><strong>Документы</strong><span>Договоры, акты и накладные</span></div></li>
+          <li><img src="assets/icons/messages-square.svg" width="42" height="42" alt=""><div><strong>Коммуникация</strong><span>Переписка в контексте заказа</span></div></li>
+        </ul>
+      </div>
+      <div class="platform-hero-visual"><img src="assets/ladsklad-platform-hero.png" width="1832" height="859" alt="Концепция интерфейса ЛАДСКЛАД: заказы на хранение и отгрузку, список складов, документы и сообщения менеджеру" fetchpriority="high"></div>
+      <p class="platform-hero-caption">Концепция интерфейса. Платформа готовится к запуску.</p>
+    </section>
+    <section class="rocket-hero hero-variant" id="hero-warehouse" role="tabpanel" aria-labelledby="hero-tab-warehouse" hidden><div class="container">
       <div class="hero-heading"><div><p class="overline">ИНТЕГРАТОР СКЛАДСКИХ УСЛУГ</p><h1 id="rocket-title">Объединяем бизнес<br><span>и складских операторов</span></h1></div></div>
       <div class="hero-scene-grid"><div class="rocket-hero-copy"><p class="hero-lead">Хранение, обработка<br>и фулфилмент для бизнеса.</p><p class="hero-description">Услуги, заказы и данные — в одном формате. Единая точка взаимодействия с сетью 3PL.</p><div class="hero-actions"><button class="button" data-app-action="request">Зарегестрироваться <span aria-hidden="true">↗</span></button></div></div>
-      <div class="rocket-hero-art"><div class="hero-art-top"><span>ГРУЗУ — МЕСТО.<br>БИЗНЕСУ — ДВИЖЕНИЕ.</span><span class="scene-cross" aria-hidden="true">+</span></div><svg class="scene-route" viewBox="0 0 800 430" fill="none" aria-hidden="true"><path d="M-20 330H120Q180 330 180 270V190Q180 135 240 135H620Q685 135 685 70V-20"/><path d="M-20 370H160Q220 370 220 310V230Q220 175 280 175H660Q725 175 725 110V-20"/><circle cx="180" cy="250" r="10"/><circle cx="590" cy="135" r="10"/></svg><span class="scene-location location-one">Москва</span><span class="scene-location location-two">Химки</span><img src="assets/rocket-logistics.png" width="1280" height="1280" alt="Оранжевый складской погрузчик с паллетой упакованного груза" fetchpriority="high"><span class="hero-art-label"><span class="scene-dot" aria-hidden="true"></span>От одной партии<br>до новых масштабов</span><span class="scene-footer">ПОДБОР · ХРАНЕНИЕ · СОПРОВОЖДЕНИЕ</span></div></div>
+      <div class="rocket-hero-art"><div class="hero-art-top"><span>ГРУЗУ — МЕСТО.<br>БИЗНЕСУ — ДВИЖЕНИЕ.</span><span class="scene-cross" aria-hidden="true">+</span></div><svg class="scene-route" viewBox="0 0 800 430" fill="none" aria-hidden="true"><path d="M-20 330H120Q180 330 180 270V190Q180 135 240 135H620Q685 135 685 70V-20"/><path d="M-20 370H160Q220 370 220 310V230Q220 175 280 175H660Q725 175 725 110V-20"/><circle cx="180" cy="250" r="10"/><circle cx="590" cy="135" r="10"/></svg><span class="scene-location location-one">Москва</span><span class="scene-location location-two">Химки</span><img src="assets/rocket-logistics.png" width="1280" height="1280" alt="Оранжевый складской погрузчик с паллетой упакованного груза" loading="lazy"><span class="hero-art-label"><span class="scene-dot" aria-hidden="true"></span>От одной партии<br>до новых масштабов</span><span class="scene-footer">ПОДБОР · ХРАНЕНИЕ · СОПРОВОЖДЕНИЕ</span></div></div>
     </div></section>
 <section class="s-section s-how" id="how" aria-labelledby="how-title"><div class="container">
 <div class="s-heading"><h2 id="how-title">Как устроена работа<br>с «ЛАДСКЛАД»</h2><p>ЛАДСКЛАД объединяет клиентов и 3PL-операторов в одной системе работы.</p></div>
@@ -41,7 +64,31 @@
 <section class="s-section s-platform" id="platform" aria-labelledby="platform-title"><div class="container s-platform-grid"><div><h2 id="platform-title" tabindex="-1">Заказы, документы<br><em>и связь с менеджером</em></h2><p class="s-lead">Управляйте складскими услугами в общем рабочем пространстве.</p><ul class="s-feature-list"><li><b>Заказы</b><span>Создание, статусы и история</span></li><li><b>Документы</b><span>Договоры, акты и накладные</span></li><li><b>Коммуникация</b><span>Переписка в контексте заказа</span></li></ul><a class="s-link" href="#platform" data-app-action="login">Войти в приложение ↗</a></div>
 <div class="s-app"><div class="s-app-bar"><strong>ЛАДСКЛАД<span> / Рабочее пространство</span></strong><span>МК</span></div><div class="s-app-body"><div class="s-app-title"><h3>Заказы</h3><span>+ Новый заказ</span></div><div class="s-order"><div><small>№ 0248 · Москва</small><h4>Хранение и обработка</h4><p>24 паллеты · Товары для дома</p></div><span class="s-status">В работе</span></div><div class="s-progress"><span>Принят</span><span>На складе</span><span>Отгружен</span></div><div class="s-app-split"><div><h4>Документы <span>02</span></h4><p>↗ Договор хранения.pdf</p><p>↗ Акт приёмки.pdf</p></div><div><h4>Менеджер по заказу</h4><p class="s-chat">Приёмка завершена. Акт добавлен в документы.</p><small>Вся переписка сохранена</small></div></div></div><p class="s-app-caption">Концепция интерфейса. Платформа готовится к запуску.</p></div>
 </div></section>
-<section class="s-section s-network" id="network" aria-labelledby="network-title"><div class="container"><div class="s-heading"><h2 id="network-title">30 складов.<br>Хранение и фулфилмент.</h2></div><div class="s-network-grid"><div class="s-network-photo"><img src="assets/warehouse-hero.jpg" width="1800" height="1200" loading="lazy" alt="Иллюстрация складского пространства"><div><strong>30</strong><span>складов в интеграции</span></div></div><div class="s-network-copy"><p class="s-lead">От хранения партии до полного цикла фулфилмента.</p><div class="s-cities"><span>Москва и область</span><span>Санкт-Петербург</span><span>Новосибирск</span><span>Краснодар</span><span>Екатеринбург</span></div><div class="s-services"><article><h3>Хранение</h3><p>Паллетное, стеллажное и мелкоячеечное.</p></article><article><h3>Обработка</h3><p>Приёмка, комплектация, упаковка и маркировка.</p></article><article><h3>Фулфилмент</h3><p>Подготовка заказов, отгрузка и возвраты.</p></article></div><p class="s-note">Температурный режим и специальные условия подбираем под требования груза.</p></div></div><details class="s-addresses"><summary>Адреса складов Москвы и области <span aria-hidden="true">+</span></summary><ul><li>Москва, ул. Поляны 50 стр.1</li><li>Москва, дер. Саларьево вл 1 с.2</li><li>Химки, дер. Подолино Промышленная зона, 2Б</li><li>Химки, Ленинградское шоссе, 34км, стр.21</li><li>Мытищи, Хлебозаводская улица, 4с2А</li><li>Видное, Северная промзона</li><li>Одинцово, Внуковская улица,</li><li>Домодедово, микрорайон Белые Столбы</li><li>Дмитров, ул. 2-я Левонабережная, вл.20</li><li>Дмитровское городское поселение,</li><li>поселок дома отдыха &quot;Горки&quot; 4км от ЦКАД (46Н-01133), 7км от Дмитровского шоссе (трасса А-104)</li><li>Дмитров, 2-ая Левонабережная ул., дом 12 (пересечение А-108 и Дмитровского ш.)</li><li>Солнечногорск, территориальное управление Смирновское</li><li>Химки, квартал Клязьма,строение 14Н</li><li>Мытищи, Волковское шоссе 5А стр. 3</li><li>Мытищинский район, сельское поселение Федоскинское, д. Новосельцево</li><li>Щёлково, д. Моносеево, 24б</li><li>Московская область, Талдомский р-н, пгт Запрудня, ул. Ленина, д 1</li><li>Московская область, Ленинский муниципальныйрайон, городское поселение Горки Ленинские, Промзона «Технопарк», ул. Западная, земельный участок 19.</li><li>Истра, д. Давыдовское, индустриальный парк Кулон-Истра</li><li>Ногинск, р.п. Обухово, &quot;Атлант-Парк&quot;</li><li>Склад &quot;Сынково&quot; теплый склад класса &quot;А&quot; на Симферопольском шоссе</li><li>Домодедово, территория владения склады 104 Южные ворота</li><li>Истра, д. Лешково, стр. 241</li><li>Пищевой склад до -18 в г. Химки, ул. Заводская д. 9а</li></ul></details></div></section>
+<section class="s-section s-network" id="network" aria-labelledby="network-title"><div class="container"><div class="s-heading"><h2 id="network-title">24 склада.<br>Хранение и фулфилмент.</h2></div><div class="s-network-grid"><div class="s-network-map" data-motion-paused="true" role="group" aria-label="Интерактивная карта складской сети">
+  <div class="warehouse-map-stage">
+    <div class="warehouse-map-canvas" id="warehouse-map" role="region" aria-label="Интерактивная точечная карта России"></div>
+    <div class="warehouse-map-badge"><span>СКЛАДСКАЯ СЕТЬ</span><div><strong>24</strong><span>склада<br>в интеграции</span></div></div>
+    <div class="warehouse-map-modes" role="group" aria-label="Вид карты"><button type="button" data-map-mode="country" aria-pressed="true" disabled>Россия</button><button type="button" data-map-mode="warehouses" aria-pressed="false" disabled>Склады</button></div>
+    <p class="warehouse-map-message" data-map-message role="status">Карта загрузится при просмотре раздела.</p>
+  </div>
+  <div class="warehouse-map-footer">
+    <details class="warehouse-finder" data-map-finder>
+      <summary><span><strong>Выбрать склад</strong><small>24 площадки в Москве и области</small></span><span aria-hidden="true">↗</span></summary>
+      <label for="warehouse-search">Поиск по названию или адресу</label>
+      <input id="warehouse-search" class="warehouse-search" data-map-search type="search" placeholder="Например, Химки или Дмитров" autocomplete="off" disabled>
+      <div class="warehouse-results" data-map-results aria-label="Список складов"></div>
+      <p class="warehouse-no-results" data-map-empty hidden>Ничего не найдено. Попробуйте другое название.</p>
+    </details>
+    <div class="warehouse-map-card" data-map-card hidden>
+      <button type="button" data-map-card-close aria-label="Закрыть карточку склада">×</button>
+      <strong data-map-card-title></strong><p data-map-card-address></p>
+      <small>Ориентировочное расположение по адресу</small>
+      <a href="https://yandex.ru/maps/" target="_blank" rel="noopener noreferrer">Найти адрес на Яндекс Картах ↗</a>
+    </div>
+    <p class="warehouse-map-note">Москва и Московская область · расположение точек ориентировочное</p>
+    <noscript><p class="warehouse-map-note">Для интерактивной карты включите JavaScript. Адреса складов доступны в списке ниже.</p></noscript>
+  </div>
+</div><div class="s-network-copy"><p class="s-lead">От хранения партии до полного цикла фулфилмента.</p><div class="s-cities"><span>Москва и область</span><span>Санкт-Петербург</span><span>Новосибирск</span><span>Краснодар</span><span>Екатеринбург</span></div><div class="s-services"><article><h3>Хранение</h3><p>Паллетное, стеллажное и мелкоячеечное.</p></article><article><h3>Обработка</h3><p>Приёмка, комплектация, упаковка и маркировка.</p></article><article><h3>Фулфилмент</h3><p>Подготовка заказов, отгрузка и возвраты.</p></article></div><p class="s-note">Температурный режим и специальные условия подбираем под требования груза.</p></div></div><details class="s-addresses"><summary>Адреса складов Москвы и области <span aria-hidden="true">+</span></summary><ul><li>Москва, ул. Поляны 50 стр.1</li><li>Москва, дер. Саларьево вл 1 с.2</li><li>Химки, дер. Подолино Промышленная зона, 2Б</li><li>Химки, Ленинградское шоссе, 34км, стр.21</li><li>Мытищи, Хлебозаводская улица, 4с2А</li><li>Видное, Северная промзона</li><li>Одинцово, Внуковская улица,</li><li>Домодедово, микрорайон Белые Столбы</li><li>Дмитров, ул. 2-я Левонабережная, вл.20</li><li>Дмитровское городское поселение, поселок дома отдыха &quot;Горки&quot; 4км от ЦКАД (46Н-01133), 7км от Дмитровского шоссе (трасса А-104)</li><li>Дмитров, 2-ая Левонабережная ул., дом 12 (пересечение А-108 и Дмитровского ш.)</li><li>Солнечногорск, территориальное управление Смирновское</li><li>Химки, квартал Клязьма,строение 14Н</li><li>Мытищи, Волковское шоссе 5А стр. 3</li><li>Мытищинский район, сельское поселение Федоскинское, д. Новосельцево</li><li>Щёлково, д. Моносеево, 24б</li><li>Московская область, Талдомский р-н, пгт Запрудня, ул. Ленина, д 1</li><li>Московская область, Ленинский муниципальныйрайон, городское поселение Горки Ленинские, Промзона «Технопарк», ул. Западная, земельный участок 19.</li><li>Истра, д. Давыдовское, индустриальный парк Кулон-Истра</li><li>Ногинск, р.п. Обухово, &quot;Атлант-Парк&quot;</li><li>Склад &quot;Сынково&quot; теплый склад класса &quot;А&quot; на Симферопольском шоссе</li><li>Домодедово, территория владения склады 104 Южные ворота</li><li>Истра, д. Лешково, стр. 241</li><li>Пищевой склад до -18 в г. Химки, ул. Заводская д. 9а</li></ul></details></div></section>
 <section class="s-section s-benefits s-journey" id="advantages" aria-labelledby="advantages-title">
   <div class="container">
     <div class="s-journey-heading"><h2 id="advantages-title">Складская логистика<br>на каждом этапе роста</h2></div>
