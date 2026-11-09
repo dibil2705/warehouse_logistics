@@ -25,19 +25,31 @@ document.getElementById('current-year').textContent = new Date().getFullYear();
 
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileNav = document.getElementById('mobile-nav');
+function setMenuOpen(open) {
+  mobileNav.hidden = !open;
+  document.body.classList.toggle('menu-open', open);
+  document.documentElement.classList.toggle('navigation-open', open);
+  document.querySelector('main').inert = open;
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+}
 function closeMenu() {
-  mobileNav.hidden = true;
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.setAttribute('aria-label', 'Открыть меню');
+  setMenuOpen(false);
 }
 menuToggle.addEventListener('click', () => {
   const open = menuToggle.getAttribute('aria-expanded') !== 'true';
-  menuToggle.setAttribute('aria-expanded', String(open));
-  menuToggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
-  mobileNav.hidden = !open;
+  setMenuOpen(open);
 });
 mobileNav.querySelectorAll('a, button').forEach(element => element.addEventListener('click', closeMenu));
-document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+document.addEventListener('keydown', event => {
+  if (menuToggle.getAttribute('aria-expanded') !== 'true') return;
+  if (event.key === 'Escape') { closeMenu(); menuToggle.focus(); }
+  if (event.key !== 'Tab') return;
+  const controls = [...document.querySelectorAll('.header a, .header button')].filter(element => element.getClientRects().length);
+  const first = controls[0], last = controls[controls.length - 1];
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+});
 const mobileViewport = window.matchMedia('(max-width: 960px)');
 mobileViewport.addEventListener('change', () => { if (!mobileViewport.matches) closeMenu(); });
 

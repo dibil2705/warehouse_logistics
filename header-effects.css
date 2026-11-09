@@ -12,3 +12,31 @@ html{scroll-padding-top:80px}
 @media(max-width:700px){html{scroll-padding-top:74px}.header .header-inner{height:58px}.header a.brand .brand-symbol{width:31px;height:31px}.header a.brand .brand-name{font-size:20px}.header a.brand .brand-descriptor{font-size:5.5px}.header a.brand{gap:8px}.cinematic-hero{margin-top:-58px}}
 @supports not (backdrop-filter:blur(1px)){.header,.hero-at-top .header,.palette-mint .header{background:rgba(var(--nav-rgb),.94)}}
 @media(prefers-reduced-motion:reduce){.header{transition:none;will-change:auto}}
+
+/* The mobile navigation covers the viewport, including the header area. */
+@media (max-width: 960px) {
+  body { --nav-height: 64px; }
+  html.navigation-open, body.menu-open { overflow: hidden; }
+  body.menu-open { padding-top: var(--nav-height); }
+  .menu-open .header {
+    position: fixed; inset: 0; width: 100%; height: 100vh; height: 100dvh;
+    display: flex; flex-direction: column; overflow-y: auto; overscroll-behavior: contain;
+    background: #fffaf6; transform: none; opacity: 1; pointer-events: auto;
+    backdrop-filter: none; -webkit-backdrop-filter: none; transition: none; z-index: 80;
+  }
+  .menu-open .header-inner { flex-shrink: 0; height: var(--nav-height); }
+  .menu-open .header .mobile-nav:not([hidden]) {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    width: calc(100% - var(--layout-gutter, 40px) * 2); max-width: var(--layout-max, 1180px);
+    margin-inline: auto; padding: 28px 0 max(28px, env(safe-area-inset-bottom)); gap: 0;
+    border-top: 0; background: transparent;
+  }
+  .menu-open .mobile-nav a { padding: 13px 0; border-bottom: 1px solid #eadfd6; font-size: clamp(20px, 4.8vw, 28px); font-weight: 550; line-height: 1.35; }
+  .menu-open .mobile-nav a:last-child { margin-top: 20px; border: 0; color: #ef532b; font-size: 17px; }
+  .menu-toggle>span { transition: transform .25s ease; }
+  .menu-toggle[aria-expanded="true"]>span:first-child { transform: translateY(4px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"]>span:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .menu-open .back-to-top { visibility: hidden; }
+}
+@media (max-width: 700px) { body { --nav-height: 58px; } }
+@media (prefers-reduced-motion: reduce) { .menu-toggle>span { transition: none; } }

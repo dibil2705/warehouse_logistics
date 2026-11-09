@@ -53,7 +53,7 @@
       this.requestDraw();
     }
     setPoints(points) {
-      this.points = points.map(([x, y], index) => ({ x, y, radius: 0, offsetX: 0, offsetY: 0, phase: index * .37 }));
+      this.points = points.map(([x, y], index) => ({ x, y, radius: 0, offsetX: 0, offsetY: 0, driftX: 0, driftY: 0, phase: index * .37 }));
       this.requestDraw();
     }
     setCamera(camera) { this.camera = { ...camera }; this.requestDraw(); }
@@ -74,6 +74,7 @@
       const baseRadius = Math.max(.85, Math.min(1.55, this.ratio * 2.05));
       const reach = Math.max(72, Math.min(132, this.width * .16));
       const ease = reduced.matches ? 1 : 1 - Math.exp(-dt / 90);
+      const driftDecay = Math.exp(-dt / 1100), noise = Math.sqrt(dt / 1000) * 8;
       let nearest = -1, nearestDistance = Infinity;
       for (let index = 0; index < this.points.length; index++) {
         const point = this.points[index];
@@ -99,8 +100,16 @@
         const push = this.pointer && !reduced.matches ? Math.min(18, Math.max(9, this.width * .018)) * influence : 0;
         const directionX = point.distance > .01 && this.pointer ? (point.screenX - this.pointer.x) / point.distance : Math.cos(point.phase);
         const directionY = point.distance > .01 && this.pointer ? (point.screenY - this.pointer.y) / point.distance : Math.sin(point.phase);
-        point.offsetX += (directionX * push - point.offsetX) * ease;
-        point.offsetY += (directionY * push - point.offsetY) * ease;
+        // A bounded random walk keeps hovered dots alive even with a stationary cursor.
+        if (influence > 0 && !reduced.matches) {
+          point.driftX = Math.max(-5, Math.min(5, point.driftX * driftDecay + (Math.random() - .5) * noise));
+          point.driftY = Math.max(-5, Math.min(5, point.driftY * driftDecay + (Math.random() - .5) * noise));
+        } else {
+          point.driftX = reduced.matches ? 0 : point.driftX * driftDecay;
+          point.driftY = reduced.matches ? 0 : point.driftY * driftDecay;
+        }
+        point.offsetX += (directionX * push + point.driftX * influence - point.offsetX) * ease;
+        point.offsetY += (directionY * push + point.driftY * influence - point.offsetY) * ease;
         const x = point.screenX + point.offsetX, y = point.screenY + point.offsetY;
         if (x < -10 || x > this.width + 10 || y < -10 || y > this.height + 10) continue;
         context.moveTo(x + point.radius, y);
