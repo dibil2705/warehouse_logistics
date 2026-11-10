@@ -6,7 +6,7 @@
 .s-services article { padding: 16px 18px; border: 1px solid #e5ddd4; border-left: 3px solid #ef532b; border-radius: 13px; background: #ffffffc9; }
 .s-services article p { font-size: 13px; line-height: 1.7; }
 .s-addresses li a { display: block; padding: 4px 0; }
-.s-addresses li a>span { display: block; margin-top: 5px; color: #d94a25; font-size: 10px; }
+.s-addresses li a>.ui-arrow { width: 14px; height: 14px; margin-left: 6px; color: #d94a25; vertical-align: -.18em; }
 .s-addresses li a:hover { color: #d94a25; text-decoration: underline; text-underline-offset: 3px; }
 .s-network-map { min-width: 0; overflow: hidden; border: 1px solid #e0ddd5; border-radius: 22px; background: #fcfbf8; box-shadow: 0 16px 40px #48301e08; transition: border-color .4s ease, box-shadow .4s ease; }
 .warehouse-map-stage { position: relative; height: 620px; overflow: hidden; isolation: isolate; background: radial-gradient(ellipse at 25% 65%, #fce9dc66, transparent 55%), #faf9f6; }
@@ -98,6 +98,7 @@
   .s-network-copy>.s-services { grid-template-columns: 1fr; gap: 18px; }
   .s-network-map { border-radius: 17px; }
   .warehouse-map-stage { height: 420px; width: calc(100% + 24px); margin-inline: -12px; }
+  .s-network-map[data-map-view="warehouses"] .warehouse-map-stage { height: 500px; }
   .warehouse-map-badge>span { font-size: 7px; }
   .warehouse-map-badge div>span { font-size: 9px; max-width: 70px; }
   .warehouse-map-badge strong { font-size: 32px; }

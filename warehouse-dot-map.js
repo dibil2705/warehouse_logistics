@@ -119,6 +119,7 @@
   let svg, viewport, dotsLayer, nodesLayer, geography, locations, plots, mode = 'country', selectedId = '';
   let camera = { scale: 1, x: 0, y: 0 }, frame = 0, drag = null, activeNodes = [];
   let dotField;
+  let fittedView = true;
 
   function updateMotion() {
     shell.dataset.motionPaused = String(!inView || document.hidden || reduced.matches);
@@ -144,7 +145,24 @@
     shell.dataset.zoom = camera.scale.toFixed(2);
     dotField?.setCamera(camera);
   }
+  function initialCamera() {
+    if (mode === 'country') return { scale: 1.3, x: 0, y: 0 };
+    const xs = geography.region.dots.map(point => point[0]), ys = geography.region.dots.map(point => point[1]);
+    const left = Math.min(...xs), right = Math.max(...xs), top = Math.min(...ys), bottom = Math.max(...ys);
+    const { width, height, ratio, offsetX, offsetY } = dotField;
+    const side = width < 500 ? 18 : 26, topInset = 86, bottomInset = 20;
+    const scale = Math.min(2.8, Math.max(1.4, Math.min(
+      (width - side * 2) / ((right - left) * ratio),
+      (height - topInset - bottomInset) / ((bottom - top) * ratio)
+    )));
+    return {
+      scale,
+      x: (width / 2 - offsetX) / ratio - 500 - ((left + right) / 2 - 500) * scale,
+      y: ((height + topInset - bottomInset) / 2 - offsetY) / ratio - 320 - ((top + bottom) / 2 - 320) * scale
+    };
+  }
   function moveCamera(target, duration = 550) {
+    fittedView = false;
     cancelAnimationFrame(frame);
     target.scale = Math.min(7, Math.max(1, target.scale));
     const maxX = 500 * (target.scale - 1) + 90, maxY = 300 * (target.scale - 1) + 65;
@@ -281,7 +299,7 @@
   function setMode(value) {
     if (!svg) return;
     cancelAnimationFrame(frame);
-    mode = value; camera = { scale: mode === 'country' ? 1.3 : 1.4, x: 0, y: 0 };
+    mode = value; fittedView = true; camera = initialCamera();
     shell.dataset.mapView = mode;
     modes.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mapMode === mode)));
     svg.setAttribute('aria-label', mode === 'country' ? 'Интерактивная точечная карта России. Маркер Москвы открывает 24 склада.' : 'Точечная карта Москвы и области. Выберите склад на карте.');
@@ -313,7 +331,7 @@
       viewport = element('g'); dotsLayer = element('g', { 'aria-hidden': 'true' }); nodesLayer = element('g');
       viewport.append(dotsLayer, nodesLayer); scene.append(viewport); svg.append(scene); canvas.append(svg);
       dotField = new DotField(canvas, svg);
-      dotField.onResize = () => renderNodes();
+      dotField.onResize = () => { if (fittedView) camera = initialCamera(); renderNodes(); };
       dotField.setActive(inView && !document.hidden);
       modes.forEach(button => { button.disabled = false; button.addEventListener('click', () => { closeCard(); setMode(button.dataset.mapMode); }); });
       const zoom = direction => { moveCamera({ scale: camera.scale * direction, x: camera.x * direction, y: camera.y * direction }); };
