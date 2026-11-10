@@ -65,17 +65,18 @@
 }
 
 
-/* Service panels belong to the platform section, outside the hero. */
+/* Compact service panels sit beside the interface preview. */
 .s-platform-grid { row-gap: 36px; }
-.s-feature-list.platform-service-panels { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; margin: 0; }
-.s-feature-list.platform-service-panels li { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; min-height: 164px; padding: 20px; border: 1px solid #f6efea; border-radius: 20px; background: #fff; box-shadow: 0 8px 28px #d992730d; }
+.s-platform-copy { min-width: 0; }
+.s-feature-list.platform-service-panels { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 26px 0 0; }
+.s-feature-list.platform-service-panels li { display: flex; flex-direction: row; align-items: center; gap: 16px; min-height: 88px; padding: 16px 18px; border: 1px solid #f6efea; border-radius: 20px; background: #fff; box-shadow: 0 8px 28px #d992730d; }
 .platform-service-panels img { width: 44px; height: 44px; padding: 10px; flex-shrink: 0; border-radius: 15px; background: #ffe1cd; }
 .platform-service-panels li>div { min-width: 0; }
 .platform-service-panels b { display: block; min-width: 0; margin-bottom: 5px; color: #202326; font-size: 17px; font-weight: 650; line-height: 1.3; letter-spacing: -.3px; }
 .platform-service-panels span { display: block; max-width: 250px; color: #74736e; font-size: 13px; line-height: 1.7; }
 .s-how .s-heading>p.s-how-note { max-width: 450px; margin: 0; color: var(--s-accent); font: 400 clamp(25px,2.2vw,30px)/1.2 Caveat,cursive; letter-spacing: -.2px; transform: rotate(-3deg); }
 @media (max-width: 700px) {
-  .s-feature-list.platform-service-panels { grid-template-columns: 1fr; gap: 16px; }
-  .s-feature-list.platform-service-panels li { flex-direction: row; align-items: center; min-height: 104px; padding: 20px; gap: 16px; border-radius: 18px; }
+  .s-feature-list.platform-service-panels { grid-template-columns: 1fr; gap: 12px; }
+  .s-feature-list.platform-service-panels li { flex-direction: row; align-items: center; min-height: 88px; padding: 16px 18px; gap: 16px; border-radius: 18px; }
   .s-how .s-heading>p.s-how-note { margin-top: 22px; max-width: 350px; font-size: 27px; transform: rotate(-2deg); }
 }

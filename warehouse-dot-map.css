@@ -2,7 +2,12 @@
 .s-network-grid { grid-template-columns: minmax(0,2.6fr) minmax(280px,1fr); gap: 48px; align-items: center; }
 .s-network-copy { display: grid; gap: 22px; align-items: start; }
 .s-network-copy>.s-lead,.s-network-copy>.s-cities,.s-network-copy>.s-note { margin: 0; }
-.s-network-copy>.s-services { grid-template-columns: 1fr; gap: 22px; }
+.s-network-copy>.s-services { grid-template-columns: 1fr; gap: 12px; }
+.s-services article { padding: 16px 18px; border: 1px solid #e5ddd4; border-left: 3px solid #ef532b; border-radius: 13px; background: #ffffffc9; }
+.s-services article p { font-size: 13px; line-height: 1.7; }
+.s-addresses li a { display: block; padding: 4px 0; }
+.s-addresses li a>span { display: block; margin-top: 5px; color: #d94a25; font-size: 10px; }
+.s-addresses li a:hover { color: #d94a25; text-decoration: underline; text-underline-offset: 3px; }
 .s-network-map { min-width: 0; overflow: hidden; border: 1px solid #e0ddd5; border-radius: 22px; background: #fcfbf8; box-shadow: 0 16px 40px #48301e08; transition: border-color .4s ease, box-shadow .4s ease; }
 .warehouse-map-stage { position: relative; height: 620px; overflow: hidden; isolation: isolate; background: radial-gradient(ellipse at 25% 65%, #fce9dc66, transparent 55%), #faf9f6; }
 .warehouse-map-stage::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(#afa99f26 .6px, transparent .6px); background-size: 17px 17px; pointer-events: none; }
@@ -32,6 +37,10 @@
 .network-map-node:focus-visible .network-node-hit { fill: #ef532b1a; stroke: #d5431d; stroke-width: 2px; stroke-dasharray: 3 3; }
 .network-node-pulse { fill: none; stroke: #ef532b; stroke-width: 1.1px; opacity: .4; animation: network-pulse 4.8s ease-out infinite; transform-box: fill-box; transform-origin: center; pointer-events: none; }
 .network-node-count { fill: #fff; font: 700 18px/1 Manrope, Arial, sans-serif; pointer-events: none; }
+.network-node-number { font-size: 12px; }
+.network-site-line { stroke: #c78a6c; stroke-width: .8px; opacity: .55; pointer-events: none; }
+.network-landmark { pointer-events: none; }
+.network-landmark text { fill: #6e6b64; font: 600 13px/1 Manrope, Arial, sans-serif; paint-order: stroke; stroke: #eceae5; stroke-width: 5px; stroke-linejoin: round; }
 .network-node-center { fill: #fff; pointer-events: none; }
 .network-node-label { fill: #8e4e35; font: 600 13px/1 Manrope, Arial, sans-serif; paint-order: stroke; stroke: #faf9f6; stroke-width: 5px; stroke-linejoin: round; pointer-events: none; }
 .network-spider-line { stroke: #e5a68b; stroke-width: 1.2px; }
@@ -63,6 +72,8 @@
 .warehouse-map-card small { display: block; margin-bottom: 10px; color: #a08e7e; font-size: 9px; line-height: 1.5; }
 .warehouse-map-card a { color: #dc4c26; font-size: 10px; font-weight: 650; }
 .warehouse-map-card button { position: absolute; top: 9px; right: 9px; display: grid; place-items: center; width: 25px; height: 25px; padding: 0; border-radius: 50%; background: #f5e7db; color: #9c7961; font-size: 18px; line-height: 1; }
+.warehouse-map-stage>.warehouse-map-card { position: absolute; z-index: 3; left: 16px; bottom: 16px; width: min(360px,calc(100% - 32px)); margin: 0; background: #fffaf5; box-shadow: 0 12px 35px #5135211a; }
+.warehouse-map-card [data-map-card-title]:focus { outline: none; }
 .warehouse-map-message { position: absolute; z-index: 1; left: 24px; right: 24px; top: 190px; margin: 0; padding: 12px; border-radius: 9px; background: #fffffff0; color: #9b8a7b; font-size: 11px; line-height: 1.6; pointer-events: none; }
 .warehouse-map-message[hidden] { display: none; }
 .s-network-map[data-motion-paused="true"] .network-map-scene,.s-network-map[data-motion-paused="true"] .network-dots,.s-network-map[data-motion-paused="true"] .network-node-pulse { animation-play-state: paused; }
@@ -83,6 +94,7 @@
 }
 @media (max-width: 700px) {
   .network-city { display: none; }
+  .network-landmark:not(.is-primary) { display: none; }
   .s-network-copy>.s-services { grid-template-columns: 1fr; gap: 18px; }
   .s-network-map { border-radius: 17px; }
   .warehouse-map-stage { height: 420px; width: calc(100% + 24px); margin-inline: -12px; }

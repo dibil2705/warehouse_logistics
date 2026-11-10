@@ -117,7 +117,7 @@
   }
   let inView = false, initialized = false;
   let svg, viewport, dotsLayer, nodesLayer, geography, locations, plots, mode = 'country', selectedId = '';
-  let camera = { scale: 1, x: 0, y: 0 }, frame = 0, drag = null, activeNodes = [], spider = null;
+  let camera = { scale: 1, x: 0, y: 0 }, frame = 0, drag = null, activeNodes = [];
   let dotField;
 
   function updateMotion() {
@@ -170,79 +170,118 @@
     node.append(element('circle', { r: 2.6 }), element('text', { x: 7, y: 4 }, name));
     nodesLayer.append(node); activeNodes.push({ node, x: point[0], y: point[1] });
   }
-  function marker(point, rows, label = '') {
+  function marker(point, rows, label = '', number = '') {
     const selected = rows.some(row => row.id === selectedId);
-    const title = rows.length > 1 ? `${rows.length} склада: ${rows.map(row => row.name).join(', ')}. Нажмите, чтобы раскрыть.` : rows[0].name + '. ' + rows[0].address;
+    const title = rows.length > 1 ? `${rows.length} склада: ${rows.map(row => row.name).join(', ')}. Нажмите, чтобы раскрыть.` : (number ? number + ' · ' : '') + rows[0].name + '. ' + rows[0].address;
     const node = element('g', { class: 'network-map-node' + (selected ? ' is-selected' : ''), role: 'button', tabindex: 0, 'aria-label': title });
     node.append(element('title', {}, title));
-    node.append(element('circle', { r: 36, class: 'network-node-hit' }));
+    node.append(element('circle', { r: number ? 32 : 36, class: 'network-node-hit' }));
     node.append(element('circle', { r: rows.length > 1 ? 25 : 19, class: 'network-node-pulse' }));
-    node.append(element('circle', { r: rows.length > 1 ? 20 : 12, class: 'network-node-core' }));
-    if (rows.length > 1) node.append(element('text', { y: 5, 'text-anchor': 'middle', class: 'network-node-count' }, String(rows.length)));
+    node.append(element('circle', { r: rows.length > 1 ? 20 : 14, class: 'network-node-core' }));
+    if (rows.length > 1 || number) node.append(element('text', { y: number ? 4 : 5, 'text-anchor': 'middle', class: 'network-node-count' + (number ? ' network-node-number' : '') }, number || String(rows.length)));
     else node.append(element('circle', { r: 3.3, class: 'network-node-center' }));
-    if (label || selected) node.append(element('text', { y: rows.length > 1 ? 45 : 35, 'text-anchor': 'middle', class: 'network-node-label' }, label || rows[0].name));
+    if (label) node.append(element('text', { y: rows.length > 1 ? 45 : 35, 'text-anchor': 'middle', class: 'network-node-label' }, label || rows[0].name));
     const activate = e => {
       e.stopPropagation();
       if (mode === 'country') { setMode('warehouses'); svg.focus({ preventScroll: true }); }
-      else if (rows.length === 1) openLocation(rows[0]);
-      else expandGroup(point, rows);
+      else openLocation(rows[0]);
     };
     node.addEventListener('click', activate);
     node.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(e); } });
     nodesLayer.append(node); activeNodes.push({ node, x: point[0], y: point[1] });
   }
-  function groupsForRegion() {
-    const groups = [];
-    plots.forEach(plot => {
-      const threshold = Math.max(41, 38 / (dotField?.ratio || 1)) / camera.scale;
-      const group = groups.find(item => Math.hypot(item.x - plot.point[0], item.y - plot.point[1]) < threshold);
-      const row = locations.find(item => item.id === plot.id);
-      if (!row) return;
-      if (group) {
-        group.x = (group.x * group.rows.length + plot.point[0]) / (group.rows.length + 1);
-        group.y = (group.y * group.rows.length + plot.point[1]) / (group.rows.length + 1);
-        group.rows.push(row);
-      } else groups.push({ x: plot.point[0], y: plot.point[1], rows: [row] });
+  function regionMarkers() {
+    const ratio = dotField.ratio, effective = Math.max(ratio, .68);
+    const gap = Math.max(48, 64 * effective + 4);
+    const project = point => ({
+      x: dotField.offsetX + ((point[0] - 500) * camera.scale + 500 + camera.x) * ratio,
+      y: dotField.offsetY + ((point[1] - 320) * camera.scale + 320 + camera.y) * ratio
     });
-    return groups;
+    const positions = plots.map((plot, index) => {
+      const anchor = project(plot.point);
+      return { plot, anchor, x: anchor.x + Math.cos(index * 2.4), y: anchor.y + Math.sin(index * 2.4) };
+    });
+    // Resolve close sites into individual targets while retaining their geographic anchors.
+    for (let pass = 0; pass < 180; pass++) {
+      for (let i = 0; i < positions.length; i++) {
+        const a = positions[i];
+        if (pass < 90) { a.x += (a.anchor.x - a.x) * .015; a.y += (a.anchor.y - a.y) * .015; }
+        for (let j = i + 1; j < positions.length; j++) {
+          const b = positions[j], dx = b.x - a.x, dy = b.y - a.y, distance = Math.hypot(dx, dy);
+          if (distance >= gap) continue;
+          const angle = distance > .01 ? Math.atan2(dy, dx) : (i + j) * 2.4;
+          const push = (gap - distance) * .51;
+          a.x -= Math.cos(angle) * push; a.y -= Math.sin(angle) * push;
+          b.x += Math.cos(angle) * push; b.y += Math.sin(angle) * push;
+        }
+        a.x = Math.max(28, Math.min(dotField.width - 28, a.x));
+        a.y = Math.max(100, Math.min(dotField.height - 32, a.y));
+      }
+    }
+    const unproject = (x, y) => [
+      ((x - dotField.offsetX) / ratio - 500 - camera.x) / camera.scale + 500,
+      ((y - dotField.offsetY) / ratio - 320 - camera.y) / camera.scale + 320
+    ];
+    return positions.map(item => ({ ...item, point: unproject(item.x, item.y) }));
   }
+  function regionLandmarks(arranged) {
+    const byId = id => plots.find(plot => plot.id === id).point;
+    const landmarks = [
+      ['Москва', geography.region.moscow, 155, 12, true],
+      ['Дмитров', byId('warehouse-09'), 125, -65, true],
+      ['Химки', byId('warehouse-24'), -155, -50, false],
+      ['Мытищи', byId('warehouse-05'), 165, -45, false],
+      ['Истра', byId('warehouse-19'), -120, 55, false],
+      ['Домодедово', byId('warehouse-22'), 125, 75, true]
+    ];
+    const ratio = dotField.ratio, effective = Math.max(ratio, .68);
+    const offsetScale = Math.min(1, dotField.width / 720), occupied = [];
+    landmarks.forEach(([name, anchor, dx, dy, primary]) => {
+      if (dotField.width < 500 && !primary) return;
+      const desired = {
+        x: dotField.offsetX + ((anchor[0] - 500) * camera.scale + 500 + camera.x) * ratio + dx * offsetScale,
+        y: dotField.offsetY + ((anchor[1] - 320) * camera.scale + 320 + camera.y) * ratio + dy * offsetScale
+      };
+      const width = name.length * 7.5 * effective, height = 18 * effective;
+      let best = { x: 12, y: 110, score: Infinity };
+      for (let y = 100; y < dotField.height - 18; y += 10) {
+        for (let x = 12; x < dotField.width - width - 12; x += 10) {
+          const rect = { left: x - 5, right: x + width + 5, top: y - height, bottom: y + 7 };
+          const blocked = arranged.some(site => Math.hypot(site.x - Math.max(rect.left, Math.min(rect.right, site.x)), site.y - Math.max(rect.top, Math.min(rect.bottom, site.y))) < 22 * effective) || occupied.some(other => rect.left < other.right && rect.right > other.left && rect.top < other.bottom && rect.bottom > other.top);
+          const score = (x - desired.x) ** 2 + (y - desired.y) ** 2 + (blocked ? 1e7 : 0);
+          if (score < best.score) best = { x, y, score, rect };
+        }
+      }
+      occupied.push(best.rect);
+      const point = [((best.x - dotField.offsetX) / ratio - 500 - camera.x) / camera.scale + 500, ((best.y - dotField.offsetY) / ratio - 320 - camera.y) / camera.scale + 320];
+      const node = element('g', { class: 'network-landmark' + (primary ? ' is-primary' : ''), 'aria-hidden': 'true' });
+      node.append(element('text', { x: 0, y: 4 }, name));
+      nodesLayer.append(node); activeNodes.push({ node, x: point[0], y: point[1] });
+    });
+  }
+
   function renderNodes() {
     nodesLayer.replaceChildren(); activeNodes = [];
     if (mode === 'country') {
       geography.country.cities.forEach(city => addStaticLabel(city.name, city.point));
       marker(geography.country.moscow, locations, 'Москва и область');
     } else {
-      addStaticLabel('Москва', geography.region.moscow);
-      groupsForRegion().forEach(group => {
-        if (spider && group.rows.some(row => spider.ids.includes(row.id))) return;
-        marker([group.x, group.y], group.rows);
+      const arranged = regionMarkers();
+      arranged.forEach(({ plot, point }) => {
+        nodesLayer.append(element('line', { x1: plot.point[0], y1: plot.point[1], x2: point[0], y2: point[1], class: 'network-site-line', 'vector-effect': 'non-scaling-stroke' }));
       });
-      if (spider) {
-        const center = spider.point;
-        spider.ids.forEach((id, index) => {
-          const angle = index / spider.ids.length * Math.PI * 2 - Math.PI / 2;
-          const radius = 65 * Math.max(1, .68 / (dotField?.ratio || 1)) / camera.scale;
-          const point = [center[0] + Math.cos(angle) * radius, center[1] + Math.sin(angle) * radius];
-          nodesLayer.append(element('line', { x1: center[0], y1: center[1], x2: point[0], y2: point[1], class: 'network-spider-line', 'vector-effect': 'non-scaling-stroke' }));
-          marker(point, [locations.find(row => row.id === id)]);
-        });
-      }
+      regionLandmarks(arranged);
+      arranged.forEach(({ plot, point }, index) => {
+        const row = locations.find(row => row.id === plot.id);
+        if (row) marker(point, [row], '', String(index + 1).padStart(2, '0'));
+      });
     }
     paintCamera();
-  }
-  function expandGroup(point, rows) {
-    if (camera.scale >= 5) { spider = { point, ids: rows.map(row => row.id) }; renderNodes(); }
-    else {
-      spider = null;
-      const scale = Math.min(7, camera.scale * 2.3);
-      moveCamera({ scale, x: (500 - point[0]) * scale, y: (320 - point[1]) * scale });
-    }
-    svg.focus({ preventScroll: true });
   }
   function setMode(value) {
     if (!svg) return;
     cancelAnimationFrame(frame);
-    mode = value; camera = { scale: mode === 'country' ? 1.3 : 1.4, x: 0, y: 0 }; spider = null;
+    mode = value; camera = { scale: mode === 'country' ? 1.3 : 1.4, x: 0, y: 0 };
     shell.dataset.mapView = mode;
     modes.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mapMode === mode)));
     svg.setAttribute('aria-label', mode === 'country' ? 'Интерактивная точечная карта России. Маркер Москвы открывает 24 склада.' : 'Точечная карта Москвы и области. Выберите склад на карте.');
@@ -254,6 +293,7 @@
     card.querySelector('[data-map-card-address]').textContent = row.address;
     card.querySelector('a').href = 'https://yandex.ru/maps/?text=' + encodeURIComponent(row.address);
     card.hidden = false; updateMotion(); renderNodes();
+    card.querySelector('[data-map-card-title]').focus({ preventScroll: true });
   }
   function closeCard() {
     selectedId = ''; card.hidden = true; updateMotion(); if (svg) renderNodes();
@@ -276,7 +316,7 @@
       dotField.onResize = () => renderNodes();
       dotField.setActive(inView && !document.hidden);
       modes.forEach(button => { button.disabled = false; button.addEventListener('click', () => { closeCard(); setMode(button.dataset.mapMode); }); });
-      const zoom = direction => { spider = null; moveCamera({ scale: camera.scale * direction, x: camera.x * direction, y: camera.y * direction }); };
+      const zoom = direction => { moveCamera({ scale: camera.scale * direction, x: camera.x * direction, y: camera.y * direction }); };
       svg.addEventListener('keydown', event => {
         if (event.target !== svg) return;
         const offsets = { ArrowLeft: [45, 0], ArrowRight: [-45, 0], ArrowUp: [0, 45], ArrowDown: [0, -45] };
