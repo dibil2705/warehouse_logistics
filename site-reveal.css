@@ -1,0 +1,14 @@
+/* Match the reference: a gentle 24px rise and fade over 650ms. */
+.site-reveal { opacity: 0; }
+.site-reveal.is-visible {
+  animation: ladsklad-reveal .65s ease both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+@keyframes ladsklad-reveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-reveal,
+  .site-reveal.is-visible { opacity: 1; animation: none; }
+}
