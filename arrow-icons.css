@@ -1,0 +1,11 @@
+/* Vector arrows do not depend on the platform's text or emoji fonts. */
+.ui-arrow {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  vertical-align: -.14em;
+  overflow: visible;
+  pointer-events: none;
+}
+.back-to-top>.ui-arrow { width: 20px; height: 20px; }

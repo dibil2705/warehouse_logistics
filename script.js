@@ -102,7 +102,7 @@ function openBrief(type, trigger, service = '') {
   dialogTitle.textContent = partner ? 'Давайте познакомимся с вашим складом' : 'Подготовьте заявку на хранение';
   dialogDescription.textContent = partner ? 'Соберите информацию о площадке в коротком брифе. Он поможет обсудить подключение к партнёрской сети.' : 'Онлайн-подача заявки появится после запуска клиентского кабинета. Пока можно скачать список вопросов, заполнить его и передать вашему менеджеру.';
   setDialogItems(partner ? ['Адрес и тип вашей площадки', 'Свободная площадь и вместимость', 'Условия хранения и доступные операции', 'Контакт представителя склада'] : ['Город и удобный район размещения', 'Тип груза и объём партии', 'Сроки и условия хранения', 'Дополнительные операции и ваши контакты']);
-  dialogAction.innerHTML = 'Скачать бриф <span aria-hidden="true">↓</span>';
+  dialogAction.innerHTML = 'Скачать бриф <span aria-hidden="true"><svg class="ui-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4v16m-7-7 7 7 7-7"/></svg></span>';
   dialogNote.textContent = 'Бриф скачивается на ваше устройство. Заявка с этой страницы не отправляется.';
   showDialog(trigger);
 }
@@ -124,7 +124,7 @@ document.querySelectorAll('[data-app-action]').forEach(element => {
     dialogTitle.textContent = 'Ваши заказы — в одном месте';
     dialogDescription.textContent = 'Клиентский кабинет готовится к запуску. Здесь вы сможете создавать обращения на хранение и возвращаться к истории своих заявок.';
     setDialogItems(['Новая заявка: груз, объём, город и сроки', 'Заказы и история их обработки', 'Документы и переписка по заказу']);
-    dialogAction.innerHTML = 'Посмотреть возможности <span aria-hidden="true">↓</span>';
+    dialogAction.innerHTML = 'Посмотреть возможности <span aria-hidden="true"><svg class="ui-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4v16m-7-7 7 7 7-7"/></svg></span>';
     dialogNote.textContent = 'На этой странице показан пример интерфейса. Вход и регистрация пока недоступны.';
     showDialog(element);
   });
@@ -138,7 +138,7 @@ document.querySelectorAll('[data-service]').forEach(button => button.addEventLis
   dialogTitle.textContent = service.title;
   dialogDescription.textContent = service.description;
   setDialogItems(service.items);
-  dialogAction.innerHTML = 'Создать заявку <span aria-hidden="true">↗</span>';
+  dialogAction.innerHTML = 'Создать заявку <span aria-hidden="true"><svg class="ui-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 19 19 5M5 5h14v14"/></svg></span>';
   dialogNote.textContent = 'Состав услуг зависит от выбранного партнёра и требований к грузу.';
   showDialog(button);
 }));
